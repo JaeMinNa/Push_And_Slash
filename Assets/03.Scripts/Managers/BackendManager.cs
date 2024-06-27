@@ -44,6 +44,8 @@ public class BackendManager : MonoBehaviour
         {
             Debug.Log("회원가입에 성공했습니다.");
             InsertData();
+            GameManager.I.DataManager.GameData.UserName = GameManager.I.DataManager.GameData.LoginID;
+            Save();
         }
         else
         {
@@ -179,11 +181,9 @@ public class BackendManager : MonoBehaviour
         return false;
     }
 
-    public int IdSetting()
+    private void IdSetting()
     {
         int id = Random.Range(0, 10000);
         GameManager.I.DataManager.GameData.LoginID = id.ToString();
-
-        return id;
     }
 }

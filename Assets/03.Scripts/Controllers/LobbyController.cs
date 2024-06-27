@@ -174,7 +174,6 @@ public class LobbyController : MonoBehaviour
 
         for (int i = 0; i < inventoryCount; i++)
         {
-            //int CharactersDataOrder = FindCharacterDataOrder(_inventory[i]);
             GameManager.I.DataManager.DataWrapper.CharacterInventory[i].Atk
                 = _inventory[i].OriginAtk + ((_inventory[i].Level * 0.1f) - 0.1f) + ((_inventory[i].Star * 0.5f) - 0.5f);
             GameManager.I.DataManager.DataWrapper.CharacterInventory[i].Def
@@ -440,7 +439,7 @@ public class LobbyController : MonoBehaviour
     private void CharacterSelectActive()
     {
         PlayerPrefs.SetInt("Tutorial", -1);
-        //GameManager.I.DataManager.GameData.UserName = GameManager.I.GPGSManager.GetGPGSUserID();
+        GameManager.I.DataManager.GameData.UserName = GameManager.I.DataManager.GameData.LoginID;
         _character1AtkText.text = _dataWrapper.CharacterDatas[0].OriginAtk.ToString();
         _character1DefText.text = _dataWrapper.CharacterDatas[0].OriginDef.ToString();
         _character1SpeedText.text = _dataWrapper.CharacterDatas[0].OriginSpeed.ToString();

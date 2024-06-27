@@ -23,18 +23,19 @@ public class StartSceneController : MonoBehaviour
 
     public void GameStartButton()
     {
-        if(UnityEngine.Application.isEditor)
-        {
-            GameManager.I.SoundManager.StartSFX("ButtonClick");
-            GameManager.I.DataManager.GameData.LoginID = "0";
-            GameManager.I.BackendManager.Login();
-        }
-        else
-        {
-            GameManager.I.SoundManager.StartSFX("ButtonClick");
-            //int id = Random.Range(0, 10000);
-            //GameManager.I.DataManager.GameData.LoginID = id.ToString();
-            GameManager.I.BackendManager.Login();
-        }
+        //if (UnityEngine.Application.isEditor)
+        //{
+        //    GameManager.I.SoundManager.StartSFX("ButtonClick");
+        //    GameManager.I.DataManager.GameData.LoginID = "0";
+        //    GameManager.I.BackendManager.Login();
+        //}
+        //else
+        //{
+        //    GameManager.I.SoundManager.StartSFX("ButtonClick");
+        //    GameManager.I.BackendManager.Login();
+        //}
+
+        GameManager.I.SoundManager.StartSFX("ButtonClick");
+        GameManager.I.BackendManager.Login();
     }
 }
