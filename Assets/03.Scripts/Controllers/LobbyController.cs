@@ -118,8 +118,8 @@ public class LobbyController : MonoBehaviour
 
     private void Update()
     {
-        //text1.text = "GPGS UserID : " + GameManager.I.GPGSManager.GetGPGSUserID();
-        //text2.text = "GPGS DisplayName : " + GameManager.I.GPGSManager.GetGPGSUserDisplayName();
+        text1.text = "뒤끝 연결 ? : " + GameManager.I.BackendManager.IsConnect();
+        text2.text = "GameData.LoginID : " + GameManager.I.DataManager.GameData.LoginID;
     }
 
     public void ButtonClickMiss()

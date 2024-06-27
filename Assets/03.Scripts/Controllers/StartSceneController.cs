@@ -5,11 +5,8 @@ using TMPro;
 
 public class StartSceneController : MonoBehaviour
 {
-    [SerializeField] private GameObject _loginGoogleButton;
     [SerializeField] private GameObject _startButton;
 
-    [SerializeField] private TMP_Text _idText;
-    [SerializeField] private TMP_Text _idText1;
     [SerializeField] private TMP_Text _idText2;
     [SerializeField] private TMP_Text _idText3;
 
@@ -20,8 +17,6 @@ public class StartSceneController : MonoBehaviour
 
     private void Update()
     {
-        //_idText.text = "GPGS UserID : " + GameManager.I.GPGSManager.GetGPGSUserID();
-        //_idText1.text = "GPGS DisplayName : " + GameManager.I.GPGSManager.GetGPGSUserDisplayName();
         _idText2.text = "뒤끝 연결 ? : " + GameManager.I.BackendManager.IsConnect();
         _idText3.text = "GameData.LoginID : " + GameManager.I.DataManager.GameData.LoginID;
     }
@@ -31,21 +26,15 @@ public class StartSceneController : MonoBehaviour
         if(UnityEngine.Application.isEditor)
         {
             GameManager.I.SoundManager.StartSFX("ButtonClick");
-            //GameManager.I.DataManager.GameData.LoginID = GameManager.I.GPGSManager.GetGPGSUserID();
+            GameManager.I.DataManager.GameData.LoginID = "0";
             GameManager.I.BackendManager.Login();
         }
         else
         {
-            //if (GameManager.I.GPGSManager.GetGPGSUserID() == "0")
-            //{
-            //    GameManager.I.SoundManager.StartSFX("ButtonClickMiss");
-            //}
-            //else
-            //{
-            //    GameManager.I.SoundManager.StartSFX("ButtonClick");
-            //    GameManager.I.DataManager.GameData.LoginID = GameManager.I.GPGSManager.GetGPGSUserID();
-            //    GameManager.I.BackendManager.Login();
-            //}
+            GameManager.I.SoundManager.StartSFX("ButtonClick");
+            //int id = Random.Range(0, 10000);
+            //GameManager.I.DataManager.GameData.LoginID = id.ToString();
+            GameManager.I.BackendManager.Login();
         }
     }
 }

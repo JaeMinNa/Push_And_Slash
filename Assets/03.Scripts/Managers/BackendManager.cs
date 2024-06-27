@@ -44,12 +44,14 @@ public class BackendManager : MonoBehaviour
         {
             Debug.Log("회원가입에 성공했습니다.");
             InsertData();
-            Login();
         }
         else
         {
             Debug.Log("회원가입에 실패했습니다.");
+            IdSetting();
         }
+        
+        Login();
     }
 
     public void Login()
@@ -175,5 +177,13 @@ public class BackendManager : MonoBehaviour
         if (Backend.IsInitialized) return true;
 
         return false;
+    }
+
+    public int IdSetting()
+    {
+        int id = Random.Range(0, 10000);
+        GameManager.I.DataManager.GameData.LoginID = id.ToString();
+
+        return id;
     }
 }
