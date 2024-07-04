@@ -428,8 +428,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CharacterType: 0
+  _arrowObject: {fileID: 5667372072651831995}
   _speed: 8
-  _renderer: {fileID: 6223484635193457643}
   Atk: 0
 --- !u!65 &3794285448973905706
 BoxCollider:

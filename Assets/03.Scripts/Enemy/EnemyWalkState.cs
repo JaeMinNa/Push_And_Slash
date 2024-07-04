@@ -38,6 +38,15 @@ public class EnemyWalkState : MonoBehaviour, IEnemyState
                 break;
             }
 
+            if (transform.position.y <= -10f)
+            {
+                transform.gameObject.SetActive(false);
+                _enemyController.StageController.StageCoin += _enemyController.EnemyData.Coin;
+                _enemyController.StageController.StageExp += _enemyController.EnemyData.Exp;
+                _enemyController.StageController.CoinSetting();
+                break;
+            }
+
             yield return null;
         }
     }

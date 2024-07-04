@@ -133,7 +133,10 @@ GameObject:
   - component: {fileID: 1413601870774754605}
   - component: {fileID: 8481246056332950003}
   - component: {fileID: -4883324956701015642}
-  m_Layer: 7
+  - component: {fileID: 6346374294772335083}
+  - component: {fileID: 4504568206250219030}
+  - component: {fileID: 2803660317277846890}
+  m_Layer: 6
   m_Name: Baeseung
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -204,7 +207,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.3
   m_Height: 1.5
   m_Direction: 1
   m_Center: {x: 0, y: 0.75, z: 0}
@@ -223,11 +226,11 @@ MonoBehaviour:
   _planeConstraint: 0
   _rootTransform: {fileID: 0}
   _rootTransformOffset: {x: 0, y: 0, z: 0}
-  _radius: 0.5
+  _radius: 0.3
   _height: 1.5
   _slopeLimit: 45
   _stepOffset: 0.45
-  _perchOffset: 0.5
+  _perchOffset: 0
   _perchAdditionalHeight: 0.4
   _slopeLimitOverride: 0
   _useFlatTop: 0
@@ -326,6 +329,9 @@ MonoBehaviour:
   slideImpulse: 50
   slideDownAcceleration: 20
   IsSkill: 0
+  PhotonView: {fileID: 0}
+  IsFinish: 0
+  _isSurvive: 0
   PlayerDirection: {x: 0, y: 0, z: 0}
   Atk: 0
   SkillAtk: 0
@@ -354,6 +360,75 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!136 &6346374294772335083
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4813207384918858118}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.25
+  m_Height: 1.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.75, z: 0}
+--- !u!136 &4504568206250219030
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4813207384918858118}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Height: 1.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.75, z: 0}
+--- !u!136 &2803660317277846890
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4813207384918858118}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.15
+  m_Height: 1.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.75, z: 0}
 --- !u!1 &5976113708973523992
 GameObject:
   m_ObjectHideFlags: 0
@@ -592,16 +667,16 @@ MonoBehaviour:
     SynchronizeType: 2
     Name: Ground
   - Type: 9
-    SynchronizeType: 2
+    SynchronizeType: 0
     Name: Attack
   - Type: 9
-    SynchronizeType: 2
+    SynchronizeType: 0
     Name: Dash
   - Type: 9
-    SynchronizeType: 2
+    SynchronizeType: 0
     Name: Skill
   - Type: 9
-    SynchronizeType: 2
+    SynchronizeType: 0
     Name: Hit
   m_SynchronizeLayers:
   - SynchronizeType: 0
@@ -662,6 +737,26 @@ PrefabInstance:
     - target: {fileID: 5260203829421869418, guid: 33f81648c9485844fb45d2e15951d38c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6015263245993190351, guid: 33f81648c9485844fb45d2e15951d38c, type: 3}
+      propertyPath: m_Size.x
+      value: 0.35558373
+      objectReference: {fileID: 0}
+    - target: {fileID: 6015263245993190351, guid: 33f81648c9485844fb45d2e15951d38c, type: 3}
+      propertyPath: m_Size.y
+      value: 1.2857733
+      objectReference: {fileID: 0}
+    - target: {fileID: 6015263245993190351, guid: 33f81648c9485844fb45d2e15951d38c, type: 3}
+      propertyPath: m_Center.x
+      value: 0.010239379
+      objectReference: {fileID: 0}
+    - target: {fileID: 6015263245993190351, guid: 33f81648c9485844fb45d2e15951d38c, type: 3}
+      propertyPath: m_Center.y
+      value: 0.8930438
+      objectReference: {fileID: 0}
+    - target: {fileID: 6015263245993190351, guid: 33f81648c9485844fb45d2e15951d38c, type: 3}
+      propertyPath: m_Center.z
+      value: 0.00000009456353
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

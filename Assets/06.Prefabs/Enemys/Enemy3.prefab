@@ -5464,7 +5464,7 @@ GameObject:
   - component: {fileID: 5152706858089226300}
   - component: {fileID: 6039958185635710432}
   - component: {fileID: 6227947156232107840}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Enemy3
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -5505,6 +5505,7 @@ MonoBehaviour:
   EnemyData:
     Tag: 
     Exp: 0
+    Coin: 0
     Speed: 0
     Atk: 0
     AttackCoolTime: 0
@@ -5515,10 +5516,21 @@ MonoBehaviour:
   PlayerData:
     Tag: 
     KoreaTag: 
+    IsEquip: 0
     CharacterRank: 0
+    Star: 0
+    CurrentStarExp: 0
+    MaxStarExp: 0
     Level: 0
     CurrentExp: 0
     MaxExp: 0
+    OriginSpeed: 0
+    OriginDashImpulse: 0
+    OriginDashCoolTime: 0
+    OriginAtk: 0
+    OriginDef: 0
+    OriginSkillAtk: 0
+    OriginSkillCoolTime: 0
     Speed: 0
     DashImpulse: 0
     DashCoolTime: 0
@@ -5526,13 +5538,12 @@ MonoBehaviour:
     Def: 0
     SkillAtk: 0
     SkillCoolTime: 0
+  StageController: {fileID: 0}
   Speed: 0
   Atk: 0
   Def: 0
   IsHit_attack: 0
   IsHit_skill: 0
-  BowAnimator: {fileID: 0}
-  ArrowAnimator: {fileID: 0}
 --- !u!136 &6039958185635710432
 CapsuleCollider:
   m_ObjectHideFlags: 0

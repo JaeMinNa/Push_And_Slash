@@ -14,10 +14,11 @@ public class Arrow : MonoBehaviour
     }
 
     public Type CharacterType;
+    [SerializeField] private GameObject _arrowObject;
     [SerializeField] private float _speed;
-    [SerializeField] private SkinnedMeshRenderer _renderer;
     [HideInInspector] public float Atk;
     private GameObject _player;
+    private BoxCollider _collider;
     private Vector3 _dir;
     private ParticleSystem _effect;
     private CameraShake _cameraShake;
@@ -27,6 +28,7 @@ public class Arrow : MonoBehaviour
     {
         _effect = transform.GetChild(0).GetChild(0).GetComponent<ParticleSystem>();
         _cameraShake = Camera.main.transform.GetComponent<CameraShake>();
+        _collider = GetComponent<BoxCollider>();
     }
 
     private void Start()
@@ -74,7 +76,8 @@ public class Arrow : MonoBehaviour
                 GameManager.I.SoundManager.StartSFX("ArrowHit");
                 StartCoroutine(_cameraShake.COShake(0.3f, 0.3f));
                 _effect.Play();
-                _renderer.enabled = false;
+                _arrowObject.SetActive(false);
+                _collider.enabled = false;
             }
         }
         else if (CharacterType == Type.Player)
@@ -85,14 +88,16 @@ public class Arrow : MonoBehaviour
                 GameManager.I.SoundManager.StartSFX("ArrowHit", other.transform.position);
                 StartCoroutine(_cameraShake.COShake(0.3f, 0.3f));
                 _effect.Play();
-                _renderer.enabled = false;
+                _arrowObject.SetActive(false);
+                _collider.enabled = false;
             }
             else if (other.CompareTag("Player"))
             {
                 GameManager.I.SoundManager.StartSFX("ArrowHit", other.transform.position);
                 StartCoroutine(_cameraShake.COShake(0.3f, 0.3f));
                 _effect.Play();
-                _renderer.enabled = false;
+                _arrowObject.SetActive(false);
+                _collider.enabled = false;
 
                 if (!_photonIsMine)
                 {

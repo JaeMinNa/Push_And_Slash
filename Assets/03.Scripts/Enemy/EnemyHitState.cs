@@ -45,7 +45,7 @@ public class EnemyHitState : MonoBehaviour, IEnemyState
                 {
                     _enemyController.IsHit_attack = false;
                     _enemyController.IsHit_skill = false;
-                    if (!_isHit && _time >= 0.2f)
+                    if (!_isHit && _time >= 0.1f)
                     {
                         _isHit = true;
                         _enemyController.Rigidbody.isKinematic = true;

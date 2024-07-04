@@ -80,7 +80,10 @@ GameObject:
   - component: {fileID: 4349483417276061829}
   - component: {fileID: 1525541495887525795}
   - component: {fileID: -3834488771888831404}
-  m_Layer: 7
+  - component: {fileID: 7339156626412842968}
+  - component: {fileID: 3034619083262794630}
+  - component: {fileID: 3079798091486893126}
+  m_Layer: 6
   m_Name: Hayeong
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -151,7 +154,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.3
   m_Height: 1.5
   m_Direction: 1
   m_Center: {x: 0, y: 0.75, z: 0}
@@ -170,11 +173,11 @@ MonoBehaviour:
   _planeConstraint: 0
   _rootTransform: {fileID: 0}
   _rootTransformOffset: {x: 0, y: 0, z: 0}
-  _radius: 0.5
+  _radius: 0.3
   _height: 1.5
   _slopeLimit: 45
   _stepOffset: 0.45
-  _perchOffset: 0.5
+  _perchOffset: 0
   _perchAdditionalHeight: 0.4
   _slopeLimitOverride: 0
   _useFlatTop: 0
@@ -273,6 +276,9 @@ MonoBehaviour:
   slideImpulse: 50
   slideDownAcceleration: 20
   IsSkill: 0
+  PhotonView: {fileID: 0}
+  IsFinish: 0
+  _isSurvive: 0
   PlayerDirection: {x: 0, y: 0, z: 0}
   Atk: 0
   SkillAtk: 0
@@ -301,6 +307,75 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!136 &7339156626412842968
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2733721077996903861}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.25
+  m_Height: 1.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.75, z: 0}
+--- !u!136 &3034619083262794630
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2733721077996903861}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Height: 1.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.75, z: 0}
+--- !u!136 &3079798091486893126
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2733721077996903861}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.15
+  m_Height: 1.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.75, z: 0}
 --- !u!1 &5454783853513793319
 GameObject:
   m_ObjectHideFlags: 0
@@ -459,6 +534,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6786071888267940331}
     m_Modifications:
+    - target: {fileID: 2627241623064821074, guid: a08c96731e5b22e4793ff5111b28b9da, type: 3}
+      propertyPath: m_Size.y
+      value: 0.5781817
+      objectReference: {fileID: 0}
+    - target: {fileID: 2627241623064821074, guid: a08c96731e5b22e4793ff5111b28b9da, type: 3}
+      propertyPath: m_Center.x
+      value: -0.000000050883482
+      objectReference: {fileID: 0}
+    - target: {fileID: 2627241623064821074, guid: a08c96731e5b22e4793ff5111b28b9da, type: 3}
+      propertyPath: m_Center.y
+      value: 0.7019509
+      objectReference: {fileID: 0}
+    - target: {fileID: 2627241623064821074, guid: a08c96731e5b22e4793ff5111b28b9da, type: 3}
+      propertyPath: m_Center.z
+      value: 0.0010667952
+      objectReference: {fileID: 0}
     - target: {fileID: 2712782575874985380, guid: a08c96731e5b22e4793ff5111b28b9da, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
@@ -920,16 +1011,16 @@ MonoBehaviour:
     SynchronizeType: 2
     Name: Ground
   - Type: 9
-    SynchronizeType: 2
+    SynchronizeType: 0
     Name: Attack
   - Type: 9
-    SynchronizeType: 2
+    SynchronizeType: 0
     Name: Dash
   - Type: 9
-    SynchronizeType: 2
+    SynchronizeType: 0
     Name: Skill
   - Type: 9
-    SynchronizeType: 2
+    SynchronizeType: 0
     Name: Hit
   m_SynchronizeLayers:
   - SynchronizeType: 0

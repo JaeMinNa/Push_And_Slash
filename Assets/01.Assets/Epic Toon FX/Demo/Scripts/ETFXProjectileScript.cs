@@ -29,6 +29,7 @@ namespace EpicToonFX
         private LayerMask _layerMask;
         private CameraShake _cameraShake;
         private Vector3 _skillScale;
+        private bool _isPohonView;
         [HideInInspector] public float Atk;
         [SerializeField] private Collider[] _targets;
         [SerializeField] private float _overlapSphereRange;
@@ -124,12 +125,13 @@ namespace EpicToonFX
             }
         }
 
-        public void SetInit(float atk, Vector3 dir)
+        public void SetInit(float atk, Vector3 dir, bool photon)
         {
             _dir = dir;
             transform.LookAt(transform.position + dir);
 
             Atk = atk;
+            _isPohonView = photon;
         }
 
         private void Targetting()
@@ -179,13 +181,15 @@ namespace EpicToonFX
                     }
                     else if (GameManager.I.ScenesManager.CurrentSceneName == "MultiBattleScene1")
                     {
+                        
                         if (CharacterType == Type.PlayerAttack)
                         {
                             StartCoroutine(_cameraShake.COShake(0.3f, 0.3f));
 
                             for (int i = 0; i < _targets.Length; i++)
                             {
-                                _targets[i].GetComponent<PlayerCharacter>().PlayerNuckback(transform.position, Atk);
+                                if(!_isPohonView)
+                                _targets[i].GetComponent<PlayerCharacter>().PhotonView.RPC("RPCPlayerNuckback", RpcTarget.AllViaServer, transform.position, Atk);
                             }
                         }
                         else if (CharacterType == Type.PlayerSkill)
@@ -194,7 +198,8 @@ namespace EpicToonFX
 
                             for (int i = 0; i < _targets.Length; i++)
                             {
-                                _targets[i].GetComponent<PlayerCharacter>().PlayerNuckback(transform.position, Atk);
+                                if (!_isPohonView)
+                                _targets[i].GetComponent<PlayerCharacter>().PhotonView.RPC("RPCPlayerNuckback", RpcTarget.AllViaServer, transform.position, Atk);
                             }
                         }
                     }

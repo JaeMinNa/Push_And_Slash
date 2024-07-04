@@ -80,40 +80,26 @@ public class PlayerAnimationController : MonoBehaviour
             if (_photonView.IsMine)
             {
                 if (obj.GetComponent<ETFXProjectileScript>().CharacterType == ETFXProjectileScript.Type.PlayerAttack)
-                    obj.GetComponent<ETFXProjectileScript>().SetInit(_playerData.Atk, new Vector3(_player.transform.forward.x, 0, _player.transform.forward.z));
+                    obj.GetComponent<ETFXProjectileScript>().SetInit(_playerData.Atk, new Vector3(_player.transform.forward.x, 0, _player.transform.forward.z), true);
                 else if (obj.GetComponent<ETFXProjectileScript>().CharacterType == ETFXProjectileScript.Type.PlayerSkill)
-                    obj.GetComponent<ETFXProjectileScript>().SetInit(_playerData.SkillAtk, new Vector3(_player.transform.forward.x, 0, _player.transform.forward.z));
+                    obj.GetComponent<ETFXProjectileScript>().SetInit(_playerData.SkillAtk, new Vector3(_player.transform.forward.x, 0, _player.transform.forward.z), true);
             }
             else
             {
                 if (obj.GetComponent<ETFXProjectileScript>().CharacterType == ETFXProjectileScript.Type.PlayerAttack)
-                    obj.GetComponent<ETFXProjectileScript>().SetInit(_playerCharacter.Atk, _playerCharacter.PlayerDirection);
+                    obj.GetComponent<ETFXProjectileScript>().SetInit(_playerCharacter.Atk, _playerCharacter.PlayerDirection, false);
                 else if (obj.GetComponent<ETFXProjectileScript>().CharacterType == ETFXProjectileScript.Type.PlayerSkill)
-                    obj.GetComponent<ETFXProjectileScript>().SetInit(_playerCharacter.SkillAtk, _playerCharacter.PlayerDirection);
+                    obj.GetComponent<ETFXProjectileScript>().SetInit(_playerCharacter.SkillAtk, _playerCharacter.PlayerDirection, false);
             }
         }
         else if(GameManager.I.ScenesManager.CurrentSceneName == "BattleScene1")
         {
             if (obj.GetComponent<ETFXProjectileScript>().CharacterType == ETFXProjectileScript.Type.PlayerAttack)
-                obj.GetComponent<ETFXProjectileScript>().SetInit(_playerData.Atk, new Vector3(_player.transform.forward.x, 0, _player.transform.forward.z));
+                obj.GetComponent<ETFXProjectileScript>().SetInit(_playerData.Atk, new Vector3(_player.transform.forward.x, 0, _player.transform.forward.z), true);
             else if (obj.GetComponent<ETFXProjectileScript>().CharacterType == ETFXProjectileScript.Type.PlayerSkill)
-                obj.GetComponent<ETFXProjectileScript>().SetInit(_playerData.SkillAtk, new Vector3(_player.transform.forward.x, 0, _player.transform.forward.z));
+                obj.GetComponent<ETFXProjectileScript>().SetInit(_playerData.SkillAtk, new Vector3(_player.transform.forward.x, 0, _player.transform.forward.z), true);
         }
-
-        //_photonView.RPC("ShootRangedAttackRPC", RpcTarget.AllBuffered, name);
     }
-
-    //[PunRPC]
-    //private void ShootRangedAttackRPC(string name)
-    //{
-    //    GameObject obj = Instantiate(Resources.Load<GameObject>("Prefabs/Skills/Player/" + name), _shootPosition.position, Quaternion.identity);
-
-    //    if (obj.GetComponent<ETFXProjectileScript>().CharacterType == ETFXProjectileScript.Type.PlayerAttack)
-    //        obj.GetComponent<ETFXProjectileScript>().Atk = _playerData.Atk;
-    //    else if (obj.GetComponent<ETFXProjectileScript>().CharacterType == ETFXProjectileScript.Type.PlayerSkill)
-    //        obj.GetComponent<ETFXProjectileScript>().Atk = _playerData.SkillAtk;
-    //}
-
 
     public void ShootArrowAttack(string name)
     {

@@ -324,14 +324,9 @@ namespace ECM2.Examples.Slide
             _rigidbody.isKinematic = false;
 
             Vector3 dir = (transform.position - attackPosition).normalized;
-            if (PhotonView.IsMine)
-            {
-                _rigidbody.velocity = new Vector3(dir.x, 0, dir.z) * (power - _playerData.Def);
-            }
-            else
-            {
-                _rigidbody.velocity = new Vector3(dir.x, 0, dir.z) * (power - Def);
-            }
+
+            if (PhotonView.IsMine) _rigidbody.velocity = new Vector3(dir.x, 0, dir.z) * (power - _playerData.Def);
+            else _rigidbody.velocity = new Vector3(dir.x, 0, dir.z) * (power - Def);
 
             transform.LookAt(attackPosition);
         }
@@ -384,16 +379,5 @@ namespace ECM2.Examples.Slide
                 Def = (float)stream.ReceiveNext();
             }
         }
-
-        //protected override void OnTriggerEnter(Collider other)
-        //{
-        //    if (other.CompareTag("AttackCollider"))
-        //    {
-        //        if (PhotonView.IsMine)
-        //        {
-        //            PhotonView.RPC("RPCPlayerNuckback", RpcTarget.AllViaServer, other.transform.position, other.GetComponent<AttackCollider>().Atk);
-        //        }
-        //    }
-        //}
     }
 }

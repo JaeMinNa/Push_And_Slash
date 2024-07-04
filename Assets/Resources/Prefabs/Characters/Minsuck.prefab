@@ -3794,7 +3794,7 @@ GameObject:
   - component: {fileID: 5938491278552825815}
   - component: {fileID: 7960947937726376764}
   - component: {fileID: 7560932346648144191}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Minsuck
   m_TagString: Player
   m_Icon: {fileID: 0}

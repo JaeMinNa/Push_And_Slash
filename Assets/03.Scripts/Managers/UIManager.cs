@@ -53,6 +53,7 @@ public class UIManager : MonoBehaviour
         _playerAnimator = _player.transform.GetChild(0).GetComponent<Animator>();
         _playerCharacter = _player.GetComponent<PlayerCharacter>();
         _playerData = GameManager.I.DataManager.PlayerData;
+        _photonView = _player.GetComponent<PhotonView>();
     }
 
     public void Init()
@@ -175,11 +176,7 @@ public class UIManager : MonoBehaviour
             _playerAnimator.SetTrigger("Attack");
         else if (GameManager.I.ScenesManager.CurrentSceneName == "MultiBattleScene1")
         {
-            if (_player.GetComponent<PhotonView>().IsMine)
-            {
-                _photonView = _player.GetComponent<PhotonView>();
-                _playerCharacter.PhotonView.RPC("PlayerAttackRPC", RpcTarget.AllViaServer);
-            }
+            if (_player.GetComponent<PhotonView>().IsMine) _playerCharacter.PhotonView.RPC("PlayerAttackRPC", RpcTarget.AllViaServer);
         }
     }
 
@@ -212,9 +209,7 @@ public class UIManager : MonoBehaviour
             {
                 if (_dashTime >= _playerData.DashCoolTime)
                 {
-                    _photonView = _player.GetComponent<PhotonView>();
                     StartCoroutine(COCoolTimeRoutine(_dashImage, _playerData.DashCoolTime));
-                    //_playerAnimator.SetTrigger("Dash");
                     _playerCharacter.PhotonView.RPC("PlayerDashRPC", RpcTarget.AllViaServer);
                     _playerCharacter.Crouch();
                     _dashTime = 0f;
@@ -242,7 +237,6 @@ public class UIManager : MonoBehaviour
             {
                 if (_skillTime >= _playerData.SkillCoolTime)
                 {
-                    _photonView = _player.GetComponent<PhotonView>();
                     StartCoroutine(COCoolTimeRoutine(_skillImage, _playerData.SkillCoolTime));
                     StartCoroutine(COIsSkillFalse());
                     _playerCharacter.PhotonView.RPC("PlayerSkillRPC", RpcTarget.AllViaServer);
