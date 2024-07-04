@@ -678,10 +678,10 @@ namespace ECM2
         {
             get
             {
-#if UNITY_EDITOR
+//#if UNITY_EDITOR
                 if (_transform == null)
                     _transform = GetComponent<Transform>();
-#endif
+//#endif
 
                 return _transform;
             }
@@ -695,10 +695,10 @@ namespace ECM2
         {
             get
             {
-#if UNITY_EDITOR
+//#if UNITY_EDITOR
                 if (_rigidbody == null)
                     _rigidbody = GetComponent<Rigidbody>();
-#endif
+//#endif
 
                 return _rigidbody;
             }
@@ -722,10 +722,10 @@ namespace ECM2
         {
             get
             {
-#if UNITY_EDITOR
+//#if UNITY_EDITOR
                 if (_capsuleCollider == null)
                     _capsuleCollider = GetComponent<CapsuleCollider>();
-#endif
+//#endif
 
                 return _capsuleCollider;
             }
@@ -1685,10 +1685,10 @@ namespace ECM2
 
             MakeCapsule(_radius, _height, out _capsuleCenter, out _capsuleBottomCenter, out _capsuleTopCenter);
 
-#if UNITY_EDITOR
+//#if UNITY_EDITOR
             if (_capsuleCollider == null)
                 _capsuleCollider = GetComponent<CapsuleCollider>();
-#endif
+//#endif
 
             if (_capsuleCollider)
             {
@@ -1709,10 +1709,10 @@ namespace ECM2
 
             MakeCapsule(_radius, _height, out _capsuleCenter, out _capsuleBottomCenter, out _capsuleTopCenter);
 
-#if UNITY_EDITOR
+//#if UNITY_EDITOR
             if (_capsuleCollider == null)
                 _capsuleCollider = GetComponent<CapsuleCollider>();
-#endif
+//#endif
 
             if (_capsuleCollider)
             {

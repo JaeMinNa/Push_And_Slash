@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using ECM2.Examples.Slide;
+using Photon.Pun;
+using Photon.Realtime;
 
 public class Arrow : MonoBehaviour
 {
@@ -19,6 +21,7 @@ public class Arrow : MonoBehaviour
     private Vector3 _dir;
     private ParticleSystem _effect;
     private CameraShake _cameraShake;
+    private bool _photonIsMine;
 
     private void Awake()
     {
@@ -34,12 +37,13 @@ public class Arrow : MonoBehaviour
         {
             _dir = (_player.transform.position + new Vector3(0, 0.5f, 0) - transform.position).normalized;
             transform.LookAt(_player.transform.position + new Vector3(0, 0.5f, 0));
-        }      
+        }
         else if (CharacterType == Type.Player)
         {
-            
+
         }
 
+        Debug.Log("Arrow¿« IsMine? : " + _photonIsMine);
         StartCoroutine(CODestroyAttack());
     }
 
@@ -50,12 +54,13 @@ public class Arrow : MonoBehaviour
         
     }
 
-    public void SetInit(float atk, Vector3 dir)
+    public void SetInit(float atk, Vector3 dir, bool photon)
     {
         _dir = dir;
         transform.LookAt(transform.position + _dir);
 
         Atk = atk;
+        _photonIsMine = photon;
     }
 
 
@@ -63,7 +68,7 @@ public class Arrow : MonoBehaviour
     {
         if(CharacterType == Type.Enemy)
         {
-            if (other.CompareTag("Player"))
+            if (other.CompareTag("player"))
             {
                 _player.GetComponent<PlayerCharacter>().PlayerNuckback(transform.position, Atk);
                 GameManager.I.SoundManager.StartSFX("ArrowHit");
@@ -84,11 +89,16 @@ public class Arrow : MonoBehaviour
             }
             else if (other.CompareTag("Player"))
             {
-                other.GetComponent<PlayerCharacter>().PlayerNuckback(transform.position, Atk);
                 GameManager.I.SoundManager.StartSFX("ArrowHit", other.transform.position);
                 StartCoroutine(_cameraShake.COShake(0.3f, 0.3f));
                 _effect.Play();
                 _renderer.enabled = false;
+
+                if (!_photonIsMine)
+                {
+                    other.GetComponent<PlayerCharacter>().
+                        PhotonView.RPC("RPCPlayerNuckback", RpcTarget.AllViaServer, transform.position, Atk);
+                }
             }
         }
     }

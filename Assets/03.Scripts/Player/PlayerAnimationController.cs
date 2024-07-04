@@ -122,13 +122,13 @@ public class PlayerAnimationController : MonoBehaviour
         if (GameManager.I.ScenesManager.CurrentSceneName == "MultiBattleScene1")
         {
             if (_photonView.IsMine)
-                obj.GetComponent<Arrow>().SetInit(_playerData.Atk, new Vector3(_player.transform.forward.x, 0, _player.transform.forward.z));
+                obj.GetComponent<Arrow>().SetInit(_playerData.Atk, new Vector3(_player.transform.forward.x, 0, _player.transform.forward.z), true);
             else
-                obj.GetComponent<Arrow>().SetInit(_playerCharacter.Atk, _playerCharacter.PlayerDirection);
+                obj.GetComponent<Arrow>().SetInit(_playerCharacter.Atk, _playerCharacter.PlayerDirection, false);
         }
         else if (GameManager.I.ScenesManager.CurrentSceneName == "BattleScene1")
         {
-            obj.GetComponent<Arrow>().SetInit(_playerData.Atk, new Vector3(_player.transform.forward.x, 0, _player.transform.forward.z));
+            obj.GetComponent<Arrow>().SetInit(_playerData.Atk, new Vector3(_player.transform.forward.x, 0, _player.transform.forward.z), true);
         }
 
     }

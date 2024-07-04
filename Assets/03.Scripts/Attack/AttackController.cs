@@ -27,7 +27,7 @@ public class AttackController : MonoBehaviour
             _weaponColliders[i].enabled = true;
         }
 
-        //StartCoroutine(COAttackColliderInactive(time));
+        StartCoroutine(COAttackColliderInactive(time));
     }
 
     private IEnumerator COAttackColliderInactive(float time)
@@ -43,11 +43,11 @@ public class AttackController : MonoBehaviour
     // Player
     public void SkillColliderActive(float time)
     {
-
         _skillCollider.enabled = true;
         _effectFixedPosition.SetPosition(new Vector3(_skillCollider.transform.position.x, _skillCollider.transform.position.y, _skillCollider.transform.position.z));
         _skillParticleSystem.Play();
         StartCoroutine(COSkillColliderInactive(time));
+
     }
 
     private IEnumerator COSkillColliderInactive(float time)
@@ -56,4 +56,23 @@ public class AttackController : MonoBehaviour
 
         _skillCollider.enabled = false;
     }
+
+
+
+    //public void AttackColliderInstiate()
+    //{
+    //    _attackObj = Instantiate(Resources.Load<GameObject>("Prefabs/Attack/AttackCollider"), _skillCollider.transform.position, Quaternion.identity);
+
+    //    if (_playerCharacter.PhotonView.IsMine) _attackObj.GetComponent<MultiAttackCollider>().SetInit(GameManager.I.DataManager.PlayerData.Atk, true);
+    //    else _attackObj.GetComponent<MultiAttackCollider>().SetInit(_playerCharacter.Atk, false);
+
+    //    StartCoroutine(COAttackColliderDestroy(0.2f));
+    //}
+
+    //private IEnumerator COAttackColliderDestroy(float time)
+    //{
+    //    yield return new WaitForSeconds(time);
+
+    //    Destroy(_attackObj);
+    //}
 }

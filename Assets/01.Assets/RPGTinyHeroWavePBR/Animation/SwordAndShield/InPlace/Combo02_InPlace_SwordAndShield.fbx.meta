@@ -60,14 +60,14 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.19838941
+      - time: 0.19554041
         functionName: StartSFX
         data: PlayerSwordAttack0
         objectReferenceParameter: {fileID: 11500000, guid: 07d6a82aa8419434ca2c12fd8e7400dd, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.20160677
+      - time: 0.19590876
         functionName: AttackColliderActive
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 41916e1be04801042a025c55bcaa8e56, type: 3}

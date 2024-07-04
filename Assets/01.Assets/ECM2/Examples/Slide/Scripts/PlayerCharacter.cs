@@ -19,7 +19,7 @@ namespace ECM2.Examples.Slide
         private CharacterData _playerData;
         private Rigidbody _rigidbody;
         private Animator _anim;
-        private PhotonView _photonView;
+        public PhotonView PhotonView;
         private StageController _stageController;
         public bool IsFinish;
 
@@ -47,7 +47,7 @@ namespace ECM2.Examples.Slide
             _playerData = GameManager.I.DataManager.PlayerData;
             _rigidbody = GetComponent<Rigidbody>();
             _anim = transform.GetChild(0).GetComponent<Animator>();
-            _photonView = GetComponent<PhotonView>();
+            PhotonView = GetComponent<PhotonView>();
         }
 
         protected override void Start()
@@ -65,7 +65,7 @@ namespace ECM2.Examples.Slide
             {
                 _isSurvive = IsSurvive();
 
-                if (!_photonView.IsMine)
+                if (!PhotonView.IsMine)
                 {
                     transform.position = Vector3.Lerp(transform.position, _playerPosition, 100 * Time.deltaTime);
                     transform.rotation = Quaternion.Lerp(transform.rotation, _playerRotation, 100 * Time.deltaTime);
@@ -301,9 +301,30 @@ namespace ECM2.Examples.Slide
             StartCoroutine(COFinishNuckback(attackPosition));
             _anim.SetTrigger("Hit");
             _rigidbody.isKinematic = false;
+            Vector3 dir = (transform.position - attackPosition).normalized;
+            _rigidbody.velocity = new Vector3(dir.x, 0, dir.z) * (power - _playerData.Def);
+            transform.LookAt(attackPosition);
+        }
+
+        private IEnumerator COFinishNuckback(Vector3 attackPosition)
+        {
+            yield return new WaitForSeconds(0.5f);
+            transform.LookAt(attackPosition);
+            transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+            _rigidbody.isKinematic = true;
+        }
+
+
+        #region RPC
+        [PunRPC]
+        public void RPCPlayerNuckback(Vector3 attackPosition, float power)
+        {
+            StartCoroutine(COFinishNuckback(attackPosition));
+            if (PhotonView.IsMine) PhotonView.RPC("PlayerHitRPC", RpcTarget.AllViaServer);
+            _rigidbody.isKinematic = false;
 
             Vector3 dir = (transform.position - attackPosition).normalized;
-            if (_photonView.IsMine)
+            if (PhotonView.IsMine)
             {
                 _rigidbody.velocity = new Vector3(dir.x, 0, dir.z) * (power - _playerData.Def);
             }
@@ -315,13 +336,30 @@ namespace ECM2.Examples.Slide
             transform.LookAt(attackPosition);
         }
 
-        private IEnumerator COFinishNuckback(Vector3 attackPosition)
+        [PunRPC]
+        public void PlayerAttackRPC()
         {
-            yield return new WaitForSeconds(0.5f);
-            transform.LookAt(attackPosition);
-            transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
-            _rigidbody.isKinematic = true;
+            _anim.SetTrigger("Attack");
         }
+
+        [PunRPC]
+        public void PlayerSkillRPC()
+        {
+            _anim.SetTrigger("Skill");
+        }
+
+        [PunRPC]
+        public void PlayerDashRPC()
+        {
+            _anim.SetTrigger("Dash");
+        }
+
+        [PunRPC]
+        public void PlayerHitRPC()
+        {
+            _anim.SetTrigger("Hit");
+        }
+        #endregion
 
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
@@ -346,5 +384,16 @@ namespace ECM2.Examples.Slide
                 Def = (float)stream.ReceiveNext();
             }
         }
+
+        //protected override void OnTriggerEnter(Collider other)
+        //{
+        //    if (other.CompareTag("AttackCollider"))
+        //    {
+        //        if (PhotonView.IsMine)
+        //        {
+        //            PhotonView.RPC("RPCPlayerNuckback", RpcTarget.AllViaServer, other.transform.position, other.GetComponent<AttackCollider>().Atk);
+        //        }
+        //    }
+        //}
     }
 }

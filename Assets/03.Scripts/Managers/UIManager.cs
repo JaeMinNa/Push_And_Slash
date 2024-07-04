@@ -36,7 +36,7 @@ public class UIManager : MonoBehaviour
     private LobbyController _lobbyController;
     private float _dashTime;
     private float _skillTime;
-    //private TouchScreenKeyboard _keyboard;
+    private PhotonView _photonView;
 
     private void Update()
     {
@@ -173,12 +173,13 @@ public class UIManager : MonoBehaviour
     {
         if (GameManager.I.ScenesManager.CurrentSceneName == "BattleScene1")
             _playerAnimator.SetTrigger("Attack");
-            //_playerCharacter.SetTriggerAttackRPC();
         else if (GameManager.I.ScenesManager.CurrentSceneName == "MultiBattleScene1")
         {
             if (_player.GetComponent<PhotonView>().IsMine)
-                _playerAnimator.SetTrigger("Attack");
-                //_playerCharacter.SetTriggerAttackRPC();
+            {
+                _photonView = _player.GetComponent<PhotonView>();
+                _playerCharacter.PhotonView.RPC("PlayerAttackRPC", RpcTarget.AllViaServer);
+            }
         }
     }
 
@@ -211,8 +212,10 @@ public class UIManager : MonoBehaviour
             {
                 if (_dashTime >= _playerData.DashCoolTime)
                 {
+                    _photonView = _player.GetComponent<PhotonView>();
                     StartCoroutine(COCoolTimeRoutine(_dashImage, _playerData.DashCoolTime));
-                    _playerAnimator.SetTrigger("Dash");
+                    //_playerAnimator.SetTrigger("Dash");
+                    _playerCharacter.PhotonView.RPC("PlayerDashRPC", RpcTarget.AllViaServer);
                     _playerCharacter.Crouch();
                     _dashTime = 0f;
                 }
@@ -239,9 +242,10 @@ public class UIManager : MonoBehaviour
             {
                 if (_skillTime >= _playerData.SkillCoolTime)
                 {
+                    _photonView = _player.GetComponent<PhotonView>();
                     StartCoroutine(COCoolTimeRoutine(_skillImage, _playerData.SkillCoolTime));
                     StartCoroutine(COIsSkillFalse());
-                    _playerAnimator.SetTrigger("Skill");
+                    _playerCharacter.PhotonView.RPC("PlayerSkillRPC", RpcTarget.AllViaServer);
                     _skillTime = 0f;
                     _playerCharacter.IsSkill = true;
                 }

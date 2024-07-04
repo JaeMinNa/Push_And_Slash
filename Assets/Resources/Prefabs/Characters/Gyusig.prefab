@@ -423,6 +423,9 @@ MonoBehaviour:
   slideImpulse: 50
   slideDownAcceleration: 20
   IsSkill: 0
+  PhotonView: {fileID: 0}
+  IsFinish: 0
+  _isSurvive: 0
   PlayerDirection: {x: 0, y: 0, z: 0}
   Atk: 0
   SkillAtk: 0
