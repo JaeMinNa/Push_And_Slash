@@ -189,7 +189,7 @@ namespace EpicToonFX
                             for (int i = 0; i < _targets.Length; i++)
                             {
                                 if(!_isPohonView)
-                                _targets[i].GetComponent<PlayerCharacter>().PhotonView.RPC("RPCPlayerNuckback", RpcTarget.AllViaServer, transform.position, Atk);
+                                _targets[i].GetComponent<PlayerCharacter>().PhotonView.RPC("RPCPlayerNuckback", RpcTarget.AllViaServer, new Vector3(transform.position.x, _targets[i].transform.position.y, transform.position.z), Atk);
                             }
                         }
                         else if (CharacterType == Type.PlayerSkill)
@@ -199,7 +199,7 @@ namespace EpicToonFX
                             for (int i = 0; i < _targets.Length; i++)
                             {
                                 if (!_isPohonView)
-                                _targets[i].GetComponent<PlayerCharacter>().PhotonView.RPC("RPCPlayerNuckback", RpcTarget.AllViaServer, transform.position, Atk);
+                                _targets[i].GetComponent<PlayerCharacter>().PhotonView.RPC("RPCPlayerNuckback", RpcTarget.AllViaServer, new Vector3(transform.position.x, _targets[i].transform.position.y, transform.position.z), Atk);
                             }
                         }
                     }

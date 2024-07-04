@@ -102,7 +102,7 @@ public class Arrow : MonoBehaviour
                 if (!_photonIsMine)
                 {
                     other.GetComponent<PlayerCharacter>().
-                        PhotonView.RPC("RPCPlayerNuckback", RpcTarget.AllViaServer, transform.position, Atk);
+                        PhotonView.RPC("RPCPlayerNuckback", RpcTarget.AllViaServer, new Vector3(transform.position.x, other.transform.position.y, transform.position.z), Atk);
                 }
             }
         }

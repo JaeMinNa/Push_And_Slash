@@ -62,7 +62,7 @@ public class AttackCollider : MonoBehaviour
                 _attackParticleSystem.Play();
                 other.GetComponent<EnemyController>().IsHit_attack = true;
             }
-            else if (other.gameObject.CompareTag("Player"))
+            else if (other.gameObject.CompareTag("Player") /*&& other.gameObject != transform.root.gameObject*/)
             {
                 Debug.Log("적 공격 성공! " + other.name);
                 StartCoroutine(_cameraShake.COShake(0.3f, 0.3f));
