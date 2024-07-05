@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
+//using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
@@ -13,25 +13,31 @@ public class EnemyController : MonoBehaviour
         Enemy3,
         Enemy4,
         Enemy5,
+        Boss0,
     }
 
     public EnemyStateContext _enemyStateContext { get; private set; }
 
+    public bool IsBoss;
     public EnemyType Type;
     [HideInInspector] public GameObject Target;
     [HideInInspector] public EnemyData EnemyData;
-    [HideInInspector] public NavMeshAgent NavMeshAgent;
+    //[HideInInspector] public NavMeshAgent NavMeshAgent;
     [HideInInspector] public Animator EnemyAnimator;
     [HideInInspector] public Rigidbody Rigidbody;
     [HideInInspector] public RaycastHit ForwardHit;
     [HideInInspector] public RaycastHit DownHit;
     [HideInInspector] public CharacterData PlayerData;
     [HideInInspector] public StageController StageController;
+    [HideInInspector] public float BossAttackTime;
+    [HideInInspector] public float BossRangeSkillTime;
+    [HideInInspector] public int BossAttackCount;
     [HideInInspector] public float Speed;
     [HideInInspector] public float Atk;
     [HideInInspector] public float Def;
     [HideInInspector] public bool IsHit_attack;
     [HideInInspector] public bool IsHit_skill;
+    [HideInInspector] public bool IsMeleeSkill;
 
     private IEnemyState _walkState;
     private IEnemyState _attackState;
@@ -39,7 +45,7 @@ public class EnemyController : MonoBehaviour
 
     private void Awake()
     {
-        NavMeshAgent = GetComponent<NavMeshAgent>();
+        //NavMeshAgent = GetComponent<NavMeshAgent>();
         EnemyAnimator = transform.GetChild(0).GetComponent<Animator>();
         Rigidbody = GetComponent<Rigidbody>();
         StageController = GameObject.FindWithTag("StageController").GetComponent<StageController>();
@@ -55,15 +61,29 @@ public class EnemyController : MonoBehaviour
         _attackState = gameObject.AddComponent<EnemyAttackState>();
         _hitState = gameObject.AddComponent<EnemyHitState>();
 
-        _enemyStateContext.Transition(_walkState);
-
         EnemySetting();
         IsHit_attack = false;
         IsHit_skill = false;
+
+        if(IsBoss)
+        {
+            BossAttackTime = 0f;
+            BossAttackCount = 0;
+            BossRangeSkillTime = 0f;
+            IsMeleeSkill = false;
+        }
+
+        StartCoroutine(COWalkStart());
     }
 
     private void Update()
     {
+        if (IsBoss)
+        {
+            BossRangeSkillTime += Time.deltaTime;
+            BossAttackTime += Time.deltaTime;
+        }
+
         CheckPlayer();
         transform.LookAt(Target.transform.position);
 
@@ -111,6 +131,9 @@ public class EnemyController : MonoBehaviour
 
             case EnemyType.Enemy5:
                 EnemyData = GameManager.I.DataManager.DataWrapper.EnemyDatas[5];
+                break;
+            case EnemyType.Boss0:
+                EnemyData = GameManager.I.DataManager.DataWrapper.EnemyDatas[6];
                 break;
 
             default:
@@ -165,5 +188,12 @@ public class EnemyController : MonoBehaviour
         }
 
         return false;
+    }
+
+    IEnumerator COWalkStart()
+    {
+        yield return new WaitForSeconds(0.1f);
+
+        _enemyStateContext.Transition(_walkState);
     }
 }

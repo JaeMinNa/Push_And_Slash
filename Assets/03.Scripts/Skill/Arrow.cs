@@ -68,6 +68,14 @@ public class Arrow : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if(other.CompareTag("Obstacle"))
+        {
+            //Destroy(gameObject);
+            _effect.Play();
+            _arrowObject.SetActive(false);
+            _collider.enabled = false;
+        }
+
         if(CharacterType == Type.Enemy)
         {
             if (other.CompareTag("player"))

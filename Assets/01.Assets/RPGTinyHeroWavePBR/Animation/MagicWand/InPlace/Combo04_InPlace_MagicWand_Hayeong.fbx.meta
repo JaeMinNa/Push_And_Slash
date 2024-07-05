@@ -60,16 +60,16 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.47052276
-        functionName: ShootRangedAttack
-        data: NovaPink
+      - time: 0.91990453
+        functionName: StartSFX
+        data: PlayerNovaPinkShoot
         objectReferenceParameter: {fileID: 11500000, guid: 07d6a82aa8419434ca2c12fd8e7400dd, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.4754601
-        functionName: StartSFX
-        data: PlayerNovaPinkShoot
+      - time: 0.9206652
+        functionName: ShootRangedAttack
+        data: NovaPink
         objectReferenceParameter: {fileID: 11500000, guid: 07d6a82aa8419434ca2c12fd8e7400dd, type: 3}
         floatParameter: 0
         intParameter: 0

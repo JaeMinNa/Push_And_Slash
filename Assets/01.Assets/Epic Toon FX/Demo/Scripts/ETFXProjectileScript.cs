@@ -12,7 +12,8 @@ namespace EpicToonFX
         {
             PlayerAttack,
             PlayerSkill,
-            Enemy,
+            EnemyAttack,
+            EnemySkill,
         }
 
         public GameObject impactParticle; // Effect spawned when projectile hits a collider
@@ -45,11 +46,9 @@ namespace EpicToonFX
             _player = GameManager.I.PlayerManager.Player;
             _skillScale = new Vector3(2.5f, 2.5f, 2.5f);
 
-            if (CharacterType == Type.Enemy)
+            if (CharacterType == Type.EnemyAttack || CharacterType == Type.EnemySkill)
             {
                 _layerMask = LayerMask.NameToLayer("Player");
-                _dir = (_player.transform.position - transform.position).normalized;
-                transform.LookAt(transform.position + _dir);
             }
             else
             {
@@ -58,7 +57,7 @@ namespace EpicToonFX
             }
 
             projectileParticle = Instantiate(projectileParticle, transform.position, transform.rotation) as GameObject;
-            if (CharacterType == Type.PlayerSkill) projectileParticle.transform.localScale = _skillScale;
+            if (CharacterType == Type.PlayerSkill || CharacterType == Type.EnemySkill) projectileParticle.transform.localScale = _skillScale;
             projectileParticle.transform.parent = transform;
             if (muzzleParticle)
             {
@@ -120,7 +119,7 @@ namespace EpicToonFX
                 Destroy(gameObject); // Removes the projectile
 
                 string name = gameObject.name.Substring(0, gameObject.name.Length - 7);
-                if (CharacterType == Type.Enemy) GameManager.I.SoundManager.StartSFX("Enemy" + name + "Explosion", transform.position);
+                if (CharacterType == Type.EnemyAttack || CharacterType == Type.EnemySkill) GameManager.I.SoundManager.StartSFX("Enemy" + name + "Explosion", transform.position);
                 else GameManager.I.SoundManager.StartSFX("Player" + name + "Explosion", transform.position);
             }
         }
@@ -139,7 +138,7 @@ namespace EpicToonFX
             int layerMask = (1 << _layerMask);  // Layer 설정
             _targets = Physics.OverlapSphere(transform.position, _overlapSphereRange, layerMask);
             
-            if(CharacterType == Type.Enemy)
+            if(CharacterType == Type.EnemyAttack || CharacterType == Type.EnemySkill)
             {
                 if (_targets != null)
                 {

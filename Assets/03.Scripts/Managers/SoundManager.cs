@@ -95,6 +95,8 @@ public class SoundManager : MonoBehaviour
         _sfx.Add("Win", Resources.Load<AudioClip>("Sounds/SFX/UI/WinStar"));
         _sfx.Add("Lose", Resources.Load<AudioClip>("Sounds/SFX/UI/Lose"));
         _sfx.Add("Coin", Resources.Load<AudioClip>("Sounds/SFX/UI/Coin"));
+        _sfx.Add("EnemyFireBallGreenExplosion", Resources.Load<AudioClip>("Sounds/SFX/Enemy/EnemyFireBallGreenExplosion"));
+        _sfx.Add("EnemyFireBallGreenShoot", Resources.Load<AudioClip>("Sounds/SFX/Enemy/EnemyFireBallGreenShoot"));
     }
 
     private void Start()

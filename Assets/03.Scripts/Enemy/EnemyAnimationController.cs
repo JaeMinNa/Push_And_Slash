@@ -31,11 +31,15 @@ public class EnemyAnimationController : MonoBehaviour
         
         if(_enemyController.Type == EnemyController.EnemyType.Enemy4)
         {
-            obj.GetComponent<ETFXProjectileScript>().Atk = _enemyController.Atk;
+            obj.GetComponent<ETFXProjectileScript>().SetInit(_enemyController.Atk, new Vector3(_enemyController.transform.forward.x, 0, _enemyController.transform.forward.z), true);
         }
         else if(_enemyController.Type == EnemyController.EnemyType.Enemy5)
         {
             obj.GetComponent<Arrow>().Atk = _enemyController.Atk;
+        }
+        else if(_enemyController.Type == EnemyController.EnemyType.Boss0)
+        {
+            obj.GetComponent<ETFXProjectileScript>().SetInit(_enemyController.EnemyData.RangedSkillAtk, new Vector3(_enemyController.transform.forward.x, 0, _enemyController.transform.forward.z), true);
         }
     }
 }

@@ -110,6 +110,11 @@ public class StageController : MonoBehaviour
         }
     }
 
+    public void ButtonClickMiss()
+    {
+        GameManager.I.SoundManager.StartSFX("ButtonClickMiss");
+    }
+
     #region UI
     private void TimeTextUpdate()
     {

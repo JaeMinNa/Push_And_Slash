@@ -86,7 +86,9 @@ public class AttackCollider : MonoBehaviour
                 Vector3 contactPoint = other.ClosestPointOnBounds(transform.position);
                 _effectFixedPosition.SetPosition(contactPoint);
                 _attackParticleSystem.Play();
-                _player.GetComponent<PlayerCharacter>().PlayerNuckback(transform.position, _enemyController.Atk);
+
+                if(_enemyController.IsMeleeSkill) _player.GetComponent<PlayerCharacter>().PlayerNuckback(transform.position, _enemyController.EnemyData.MeleeSkillAtk);
+                else _player.GetComponent<PlayerCharacter>().PlayerNuckback(transform.position, _enemyController.Atk);
             }
         }
     }

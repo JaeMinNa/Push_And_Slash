@@ -47,6 +47,16 @@ public class EnemyWalkState : MonoBehaviour, IEnemyState
                 break;
             }
 
+            if(_enemyController.IsBoss)
+            {
+                if (_enemyController.BossRangeSkillTime >= _enemyController.EnemyData.RangedSkillCoolTime)
+                {
+                    _enemyController.AttackStart();
+                    _enemyController.EnemyAnimator.SetBool("Attack", true);
+                    break;
+                }
+            }
+
             yield return null;
         }
     }

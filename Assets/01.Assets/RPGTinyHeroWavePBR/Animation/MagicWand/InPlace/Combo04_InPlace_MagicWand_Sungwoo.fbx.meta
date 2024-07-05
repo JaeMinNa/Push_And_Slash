@@ -60,14 +60,14 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.4754601
+      - time: 0.92845154
         functionName: StartSFX
         data: PlayerMagicShoot
         objectReferenceParameter: {fileID: 11500000, guid: 07d6a82aa8419434ca2c12fd8e7400dd, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.47601172
+      - time: 0.9318522
         functionName: ShootRangedAttack
         data: Magic
         objectReferenceParameter: {fileID: 11500000, guid: 07d6a82aa8419434ca2c12fd8e7400dd, type: 3}

@@ -67,7 +67,7 @@ ModelImporter:
         floatParameter: 0.2
         intParameter: 0
         messageOptions: 0
-      - time: 0.41795665
+      - time: 0.41510764
         functionName: StartSFX
         data: EnemySwordAttack
         objectReferenceParameter: {fileID: 11500000, guid: 3f509bb9264552d419fd8b8b9f101700, type: 3}

@@ -77,7 +77,6 @@ MonoBehaviour:
     RankPoint: 0
     Win: 0
     Lose: 0
-    Country: 
     SFXValume: 0
     BGMValume: 0
     CameraSettingValue: 3
@@ -166,12 +165,12 @@ MonoBehaviour:
       Level: 1
       CurrentExp: 0
       MaxExp: 30
-      OriginSpeed: 4
+      OriginSpeed: 3.5
       OriginDashImpulse: 40
       OriginDashCoolTime: 15
-      OriginAtk: 4.5
+      OriginAtk: 4
       OriginDef: 0
-      OriginSkillAtk: 15.5
+      OriginSkillAtk: 14.5
       OriginSkillCoolTime: 20
       Speed: 4
       DashImpulse: 40
@@ -190,12 +189,12 @@ MonoBehaviour:
       Level: 1
       CurrentExp: 0
       MaxExp: 30
-      OriginSpeed: 7
+      OriginSpeed: 6.5
       OriginDashImpulse: 50
       OriginDashCoolTime: 9
-      OriginAtk: 7.5
+      OriginAtk: 7
       OriginDef: 1.5
-      OriginSkillAtk: 25.5
+      OriginSkillAtk: 24.5
       OriginSkillCoolTime: 14
       Speed: 7
       DashImpulse: 50
@@ -500,6 +499,10 @@ MonoBehaviour:
       Atk: 5
       AttackCoolTime: 5
       Def: 0.1
+      MeleeSkillAtk: 0
+      MeleeSkillCount: 0
+      RangedSkillAtk: 0
+      RangedSkillCoolTime: 0
     - Tag: Enemy1
       Exp: 13
       Coin: 150
@@ -507,6 +510,10 @@ MonoBehaviour:
       Atk: 7
       AttackCoolTime: 3
       Def: 0.2
+      MeleeSkillAtk: 0
+      MeleeSkillCount: 0
+      RangedSkillAtk: 0
+      RangedSkillCoolTime: 0
     - Tag: Enemy2
       Exp: 15
       Coin: 170
@@ -514,6 +521,10 @@ MonoBehaviour:
       Atk: 9
       AttackCoolTime: 4
       Def: 0.3
+      MeleeSkillAtk: 0
+      MeleeSkillCount: 0
+      RangedSkillAtk: 0
+      RangedSkillCoolTime: 0
     - Tag: Enemy3
       Exp: 17
       Coin: 170
@@ -521,6 +532,10 @@ MonoBehaviour:
       Atk: 10
       AttackCoolTime: 5
       Def: 0.4
+      MeleeSkillAtk: 0
+      MeleeSkillCount: 0
+      RangedSkillAtk: 0
+      RangedSkillCoolTime: 0
     - Tag: Enemy4
       Exp: 12
       Coin: 120
@@ -528,6 +543,10 @@ MonoBehaviour:
       Atk: 4
       AttackCoolTime: 5
       Def: 0.1
+      MeleeSkillAtk: 0
+      MeleeSkillCount: 0
+      RangedSkillAtk: 0
+      RangedSkillCoolTime: 0
     - Tag: Enemy5
       Exp: 12
       Coin: 120
@@ -535,6 +554,21 @@ MonoBehaviour:
       Atk: 3
       AttackCoolTime: 4
       Def: 0.1
+      MeleeSkillAtk: 0
+      MeleeSkillCount: 0
+      RangedSkillAtk: 0
+      RangedSkillCoolTime: 0
+    - Tag: Boss0
+      Exp: 20
+      Coin: 300
+      Speed: 0.5
+      Atk: 20
+      AttackCoolTime: 10
+      Def: 1
+      MeleeSkillAtk: 30
+      MeleeSkillCount: 3
+      RangedSkillAtk: 20
+      RangedSkillCoolTime: 20
 --- !u!1 &2014811423742056524
 GameObject:
   m_ObjectHideFlags: 0

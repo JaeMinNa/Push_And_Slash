@@ -83,6 +83,12 @@ public struct EnemyData
     public float Atk;
     public float AttackCoolTime;
     public float Def;
+
+    [Header("Boss Stats")]
+    public float MeleeSkillAtk;
+    public int MeleeSkillCount; // 몇 번의 Attack 후에 발동?
+    public float RangedSkillAtk;
+    public float RangedSkillCoolTime;
 }
 
 public class DataManager : MonoBehaviour

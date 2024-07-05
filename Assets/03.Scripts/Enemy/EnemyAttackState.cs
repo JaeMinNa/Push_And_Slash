@@ -14,11 +14,6 @@ public class EnemyAttackState : MonoBehaviour, IEnemyState
             _enemyController = enemyController;
 
         Debug.Log("Attack 상태 시작");
-        //if (_enemyController.Type == EnemyController.EnemyType.Enemy5)
-        //{
-        //    _enemyController.BowAnimator.SetTrigger("Attack");
-        //    _enemyController.ArrowAnimator.SetTrigger("Attack");
-        //}
         _time = 0f;
         StartCoroutine(COUpdate());
     }
@@ -28,20 +23,61 @@ public class EnemyAttackState : MonoBehaviour, IEnemyState
     {
         while (true)
         {
-            _time += Time.deltaTime;
-
-            if(_time >= _enemyController.EnemyData.AttackCoolTime)
+            if(!_enemyController.IsBoss)
             {
-                if(_enemyController.CheckPlayer())
+                _time += Time.deltaTime;
+
+                if (_time >= _enemyController.EnemyData.AttackCoolTime)
                 {
-                    _enemyController.AttackStart();
-                    _enemyController.EnemyAnimator.SetTrigger("ReAttack");
-                    break;
+                    if (_enemyController.CheckPlayer())
+                    {
+                        _enemyController.AttackStart();
+                        _enemyController.EnemyAnimator.SetTrigger("ReAttack");
+                        break;
+                    }
+                    else
+                    {
+                        _enemyController.WalkStart();
+                        _enemyController.EnemyAnimator.SetBool("Attack", false);
+                        break;
+                    }
                 }
-                else
+            }
+            else // Boss
+            {
+                if (_enemyController.BossAttackTime >= _enemyController.EnemyData.AttackCoolTime)
                 {
-                    _enemyController.WalkStart();
-                    _enemyController.EnemyAnimator.SetBool("Attack", false);
+                    if(_enemyController.BossAttackCount > _enemyController.EnemyData.MeleeSkillCount)
+                    {
+                        Debug.Log("Boss의 근접 스킬공격");
+                        _enemyController.IsMeleeSkill = true;
+                        _enemyController.EnemyAnimator.SetTrigger("MeleeSkill");
+                        _enemyController.BossAttackTime = 0f;
+                        _enemyController.BossAttackCount = 0;
+                    }
+                    else
+                    {
+                        Debug.Log("Boss의 근접 기본공격");
+                        _enemyController.EnemyAnimator.SetTrigger("MeleeAttack");
+                        _enemyController.BossAttackTime = 0f;
+                        _enemyController.BossAttackCount++;
+                    }                                           
+                    
+                    if(!_enemyController.CheckPlayer())
+                    {
+                        _enemyController.IsMeleeSkill = false;
+                        _enemyController.WalkStart();
+                        _enemyController.EnemyAnimator.SetBool("Attack", false);
+                        break;
+                    }
+                }
+
+                if (_enemyController.BossRangeSkillTime >= _enemyController.EnemyData.RangedSkillCoolTime)
+                {
+                    Debug.Log("Boss의 원거리 스킬공격");
+                    StartCoroutine(COStartWalkState());
+                    _enemyController.EnemyAnimator.SetTrigger("RangedSkill");
+                    _enemyController.BossRangeSkillTime = 0f;
                     break;
                 }
             }
@@ -55,5 +91,13 @@ public class EnemyAttackState : MonoBehaviour, IEnemyState
 
             yield return null;
         }
+    }
+
+    IEnumerator COStartWalkState()
+    {
+        yield return new WaitForSeconds(3f);
+
+        _enemyController.WalkStart();
+        _enemyController.EnemyAnimator.SetBool("Attack", false);
     }
 }
