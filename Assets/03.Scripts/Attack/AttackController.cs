@@ -9,17 +9,28 @@ public class AttackController : MonoBehaviour
 
     private ParticleSystem _skillParticleSystem;
     private EffectFixedPosition _effectFixedPosition;
+    private EnemyController _enemyController;
 
-    private void Start()
+    private void Awake()
     {
-        if(transform.parent.CompareTag("Player"))
+        if(transform.parent.CompareTag("Enemy"))
+        {
+            _enemyController = transform.parent.GetComponent<EnemyController>();
+
+            if (_enemyController.IsBoss)
+            {
+                _skillParticleSystem = transform.parent.GetChild(2).GetChild(1).GetChild(0).GetComponent<ParticleSystem>();
+                _effectFixedPosition = _skillParticleSystem.GetComponent<EffectFixedPosition>();
+            }
+        }
+        else if(transform.parent.CompareTag("Player"))
         {
             _skillParticleSystem = transform.parent.GetChild(2).GetChild(1).GetChild(0).GetComponent<ParticleSystem>();
             _effectFixedPosition = _skillParticleSystem.GetComponent<EffectFixedPosition>();
         }
     }
 
-    // Player, Enemy
+    // Attack
     public void AttackColliderActive(float time)
     {
         for (int i = 0; i < _weaponColliders.Length; i++)
@@ -40,7 +51,7 @@ public class AttackController : MonoBehaviour
         }
     }
 
-    // Player
+    // Skill
     public void SkillColliderActive(float time)
     {
         _skillCollider.enabled = true;
@@ -56,23 +67,4 @@ public class AttackController : MonoBehaviour
 
         _skillCollider.enabled = false;
     }
-
-
-
-    //public void AttackColliderInstiate()
-    //{
-    //    _attackObj = Instantiate(Resources.Load<GameObject>("Prefabs/Attack/AttackCollider"), _skillCollider.transform.position, Quaternion.identity);
-
-    //    if (_playerCharacter.PhotonView.IsMine) _attackObj.GetComponent<MultiAttackCollider>().SetInit(GameManager.I.DataManager.PlayerData.Atk, true);
-    //    else _attackObj.GetComponent<MultiAttackCollider>().SetInit(_playerCharacter.Atk, false);
-
-    //    StartCoroutine(COAttackColliderDestroy(0.2f));
-    //}
-
-    //private IEnumerator COAttackColliderDestroy(float time)
-    //{
-    //    yield return new WaitForSeconds(time);
-
-    //    Destroy(_attackObj);
-    //}
 }

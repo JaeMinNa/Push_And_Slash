@@ -43,7 +43,7 @@ public class AttackCollider : MonoBehaviour
         else if(CharacterType == Type.Enemy)
         {
             _enemyController = transform.parent.parent.parent.parent.parent.parent.parent.parent.parent.parent.parent.parent.GetComponent<EnemyController>();
-            _attackParticleSystem = _enemyController.transform.GetChild(1).GetChild(0).GetComponent<ParticleSystem>();
+            _attackParticleSystem = _enemyController.transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<ParticleSystem>();
         }
 
         _effectFixedPosition = _attackParticleSystem.GetComponent<EffectFixedPosition>();
@@ -87,8 +87,7 @@ public class AttackCollider : MonoBehaviour
                 _effectFixedPosition.SetPosition(contactPoint);
                 _attackParticleSystem.Play();
 
-                if(_enemyController.IsMeleeSkill) _player.GetComponent<PlayerCharacter>().PlayerNuckback(transform.position, _enemyController.EnemyData.MeleeSkillAtk);
-                else _player.GetComponent<PlayerCharacter>().PlayerNuckback(transform.position, _enemyController.Atk);
+                _player.GetComponent<PlayerCharacter>().PlayerNuckback(transform.position, _enemyController.Atk);
             }
         }
     }

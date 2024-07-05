@@ -37,7 +37,6 @@ public class EnemyController : MonoBehaviour
     [HideInInspector] public float Def;
     [HideInInspector] public bool IsHit_attack;
     [HideInInspector] public bool IsHit_skill;
-    [HideInInspector] public bool IsMeleeSkill;
 
     private IEnemyState _walkState;
     private IEnemyState _attackState;
@@ -70,7 +69,6 @@ public class EnemyController : MonoBehaviour
             BossAttackTime = 0f;
             BossAttackCount = 0;
             BossRangeSkillTime = 0f;
-            IsMeleeSkill = false;
         }
 
         StartCoroutine(COWalkStart());

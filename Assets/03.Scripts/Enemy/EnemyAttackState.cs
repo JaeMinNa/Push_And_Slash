@@ -47,25 +47,25 @@ public class EnemyAttackState : MonoBehaviour, IEnemyState
             {
                 if (_enemyController.BossAttackTime >= _enemyController.EnemyData.AttackCoolTime)
                 {
-                    if(_enemyController.BossAttackCount > _enemyController.EnemyData.MeleeSkillCount)
+                    if (_enemyController.CheckPlayer())
                     {
-                        Debug.Log("Boss의 근접 스킬공격");
-                        _enemyController.IsMeleeSkill = true;
-                        _enemyController.EnemyAnimator.SetTrigger("MeleeSkill");
-                        _enemyController.BossAttackTime = 0f;
-                        _enemyController.BossAttackCount = 0;
-                    }
+                        if (_enemyController.BossAttackCount > _enemyController.EnemyData.MeleeSkillCount)
+                        {
+                            Debug.Log("Boss의 근접 스킬공격");
+                            _enemyController.EnemyAnimator.SetTrigger("MeleeSkill");
+                            _enemyController.BossAttackTime = 0f;
+                            _enemyController.BossAttackCount = 0;
+                        }
+                        else
+                        {
+                            Debug.Log("Boss의 근접 기본공격");
+                            _enemyController.EnemyAnimator.SetTrigger("MeleeAttack");
+                            _enemyController.BossAttackTime = 0f;
+                            _enemyController.BossAttackCount++;
+                        }
+                    }                                         
                     else
                     {
-                        Debug.Log("Boss의 근접 기본공격");
-                        _enemyController.EnemyAnimator.SetTrigger("MeleeAttack");
-                        _enemyController.BossAttackTime = 0f;
-                        _enemyController.BossAttackCount++;
-                    }                                           
-                    
-                    if(!_enemyController.CheckPlayer())
-                    {
-                        _enemyController.IsMeleeSkill = false;
                         _enemyController.WalkStart();
                         _enemyController.EnemyAnimator.SetBool("Attack", false);
                         break;

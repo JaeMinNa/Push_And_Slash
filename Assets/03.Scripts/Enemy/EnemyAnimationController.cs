@@ -6,7 +6,6 @@ using EpicToonFX;
 public class EnemyAnimationController : MonoBehaviour
 {
     [SerializeField] private Transform _shootPosition;
-    //private EnemyData _enemyData;
     private EnemyController _enemyController;
 
     private void Start()
