@@ -45,9 +45,17 @@ public class EnemyAttackState : MonoBehaviour, IEnemyState
             }
             else // Boss
             {
-                if (_enemyController.BossAttackTime >= _enemyController.EnemyData.AttackCoolTime)
+                if (_enemyController.BossRangeSkillTime >= _enemyController.EnemyData.RangedSkillCoolTime)
                 {
-                    if (_enemyController.CheckPlayer())
+                    Debug.Log("Boss의 원거리 스킬공격");
+                    StartCoroutine(COStartWalkState());
+                    _enemyController.EnemyAnimator.SetTrigger("RangedSkill");
+                    _enemyController.BossRangeSkillTime = 0f;
+                    break;
+                }
+                else
+                {
+                    if (_enemyController.CheckPlayer() && _enemyController.BossAttackTime >= _enemyController.EnemyData.AttackCoolTime)
                     {
                         if (_enemyController.BossAttackCount > _enemyController.EnemyData.MeleeSkillCount)
                         {
@@ -63,8 +71,8 @@ public class EnemyAttackState : MonoBehaviour, IEnemyState
                             _enemyController.BossAttackTime = 0f;
                             _enemyController.BossAttackCount++;
                         }
-                    }                                         
-                    else
+                    }
+                    else if (!_enemyController.CheckPlayer())
                     {
                         _enemyController.WalkStart();
                         _enemyController.EnemyAnimator.SetBool("Attack", false);
@@ -72,14 +80,53 @@ public class EnemyAttackState : MonoBehaviour, IEnemyState
                     }
                 }
 
-                if (_enemyController.BossRangeSkillTime >= _enemyController.EnemyData.RangedSkillCoolTime)
-                {
-                    Debug.Log("Boss의 원거리 스킬공격");
-                    StartCoroutine(COStartWalkState());
-                    _enemyController.EnemyAnimator.SetTrigger("RangedSkill");
-                    _enemyController.BossRangeSkillTime = 0f;
-                    break;
-                }
+                //if (_enemyController.BossAttackTime >= _enemyController.EnemyData.AttackCoolTime)
+                //{
+                //    if (_enemyController.CheckPlayer())
+                //    {
+                //        if (_enemyController.BossAttackCount > _enemyController.EnemyData.MeleeSkillCount)
+                //        {
+                //            Debug.Log("Boss의 근접 스킬공격");
+                //            _enemyController.EnemyAnimator.SetTrigger("MeleeSkill");
+                //            _enemyController.BossAttackTime = 0f;
+                //            _enemyController.BossAttackCount = 0;
+                //        }
+                //        else
+                //        {
+                //            Debug.Log("Boss의 근접 기본공격");
+                //            _enemyController.EnemyAnimator.SetTrigger("MeleeAttack");
+                //            _enemyController.BossAttackTime = 0f;
+                //            _enemyController.BossAttackCount++;
+                //        }
+                //    }
+                //    else
+                //    {
+                //        _enemyController.WalkStart();
+                //        _enemyController.EnemyAnimator.SetBool("Attack", false);
+                //        break;
+                //    }
+
+                //    //if (_enemyController.BossAttackCount > _enemyController.EnemyData.MeleeSkillCount)
+                //    //{
+                //    //    Debug.Log("Boss의 근접 스킬공격");
+                //    //    _enemyController.EnemyAnimator.SetTrigger("MeleeSkill");
+                //    //    _enemyController.BossAttackTime = 0f;
+                //    //    _enemyController.BossAttackCount = 0;
+                //    //    _enemyController.WalkStart();
+                //    //    _enemyController.EnemyAnimator.SetBool("Attack", false);
+                //    //    break;
+                //    //}
+                //    //else
+                //    //{
+                //    //    Debug.Log("Boss의 근접 기본공격");
+                //    //    _enemyController.EnemyAnimator.SetTrigger("MeleeAttack");
+                //    //    _enemyController.BossAttackTime = 0f;
+                //    //    _enemyController.BossAttackCount++;
+                //    //    _enemyController.WalkStart();
+                //    //    _enemyController.EnemyAnimator.SetBool("Attack", false);
+                //    //    break;
+                //    //}
+                //}
             }
 
             if(_enemyController.IsHit_attack || _enemyController.IsHit_skill)

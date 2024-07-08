@@ -142,7 +142,8 @@ namespace EpicToonFX
             {
                 if (_targets != null)
                 {
-                    StartCoroutine(_cameraShake.COShake(0.3f, 0.3f));
+                    if (CharacterType == Type.EnemyAttack) StartCoroutine(_cameraShake.COShake(0.3f, 0.3f));
+                    else StartCoroutine(_cameraShake.COShake(1f, 0.8f));
 
                     for (int i = 0; i < _targets.Length; i++)
                     {

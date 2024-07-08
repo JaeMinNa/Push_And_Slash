@@ -54,7 +54,7 @@ public class SkillCollider : MonoBehaviour
         {
             if (other.gameObject.CompareTag("Player"))
             {
-                StartCoroutine(_cameraShake.COShake(0.8f, 0.5f));
+                StartCoroutine(_cameraShake.COShake(1f, 0.8f));
 
                 other.GetComponent<PlayerCharacter>().PlayerNuckback(_enemyController.transform.position, _enemyController.EnemyData.MeleeSkillAtk);
             }

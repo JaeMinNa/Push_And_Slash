@@ -82,7 +82,7 @@ public class AttackCollider : MonoBehaviour
         {
             if (other.CompareTag("Player") && !_player.GetComponent<PlayerCharacter>().IsSkill)
             {
-                StartCoroutine(_cameraShake.COShake(0.3f, 0.3f));
+                StartCoroutine(_cameraShake.COShake(/*0.3f, 0.3f*/0.8f, 0.5f));
                 Vector3 contactPoint = other.ClosestPointOnBounds(transform.position);
                 _effectFixedPosition.SetPosition(contactPoint);
                 _attackParticleSystem.Play();
