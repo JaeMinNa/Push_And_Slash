@@ -151,5 +151,8 @@ public class DataManager : MonoBehaviour
 
         // Inventory 昏力
         DataWrapper.CharacterInventory.Clear();
+
+        // 第场 ID 昏力
+        GameManager.I.BackendManager.DeleteUserID();
     }
 }

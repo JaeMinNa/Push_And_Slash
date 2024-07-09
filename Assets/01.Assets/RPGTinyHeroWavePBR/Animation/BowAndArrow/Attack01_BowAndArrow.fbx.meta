@@ -60,16 +60,16 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.5603715
-        functionName: ShootRangedAttack
-        data: Arrows
+      - time: 0.55776954
+        functionName: StartRangedSFX
+        data: ArrowShoot
         objectReferenceParameter: {fileID: 11500000, guid: 3f509bb9264552d419fd8b8b9f101700, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.5634675
-        functionName: StartRangedSFX
-        data: ArrowShoot
+      - time: 0.5603715
+        functionName: ShootRangedAttack
+        data: Arrows
         objectReferenceParameter: {fileID: 11500000, guid: 3f509bb9264552d419fd8b8b9f101700, type: 3}
         floatParameter: 0
         intParameter: 0

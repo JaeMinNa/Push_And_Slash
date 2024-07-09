@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 450904}
   - component: {fileID: 13576440}
   - component: {fileID: 11464288}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: FireBall
   m_TagString: Missile
   m_Icon: {fileID: 0}

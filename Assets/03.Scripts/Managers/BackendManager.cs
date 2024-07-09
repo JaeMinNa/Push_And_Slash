@@ -76,17 +76,9 @@ public class BackendManager : MonoBehaviour
         }
     }
 
-    public void AutoLogin()
+    public void DeleteUserID()
     {
-        BackendReturnObject bro = Backend.BMember.LoginWithTheBackendToken();
-        if (bro.IsSuccess())
-        {
-            Debug.Log("자동 로그인에 성공했습니다.");
-        }
-        else
-        {
-            Debug.Log("로그인에 실패했습니다.");
-        }
+        BackendReturnObject bro = Backend.BMember.WithdrawAccount();
     }
 
     // 회원 가입을 할 때, 데이터 테이블에 추가하는 함수

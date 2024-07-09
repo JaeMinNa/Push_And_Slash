@@ -78,7 +78,7 @@ public class Arrow : MonoBehaviour
 
         if(CharacterType == Type.Enemy)
         {
-            if (other.CompareTag("player"))
+            if (other.CompareTag("Player"))
             {
                 _player.GetComponent<PlayerCharacter>().PlayerNuckback(transform.position, Atk);
                 GameManager.I.SoundManager.StartSFX("ArrowHit");

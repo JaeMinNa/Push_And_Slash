@@ -28,9 +28,13 @@ public class EnemyAnimationController : MonoBehaviour
     {
         GameObject obj = Instantiate(Resources.Load<GameObject>("Prefabs/Skills/Enemy/" + name), _shootPosition.position, Quaternion.identity);
         
-        if(_enemyController.Type == EnemyController.EnemyType.Enemy4 || _enemyController.Type == EnemyController.EnemyType.Enemy5)
+        if(_enemyController.Type == EnemyController.EnemyType.Enemy4)
         {
             obj.GetComponent<ETFXProjectileScript>().SetInit(_enemyController.Atk, new Vector3(_enemyController.transform.forward.x, 0, _enemyController.transform.forward.z), true);
+        }
+        else if (_enemyController.Type == EnemyController.EnemyType.Enemy5)
+        {
+            obj.GetComponent<Arrow>().SetInit(_enemyController.Atk, new Vector3(_enemyController.transform.forward.x, 0, _enemyController.transform.forward.z), true);
         }
         else
         {

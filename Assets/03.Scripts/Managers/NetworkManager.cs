@@ -37,6 +37,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject _roomEnemyReadyText;
     private bool _isNoEnemy;
 
+    [Header("UI")]
+    [SerializeField] private TMP_Text _AllMultiPlayerText;
+
     [Header("Chat")]
     public TMP_InputField ChatInputText;
     public TMP_Text[] ChatTexts;
@@ -101,6 +104,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {
             if (PhotonNetwork.InRoom)
             {
+                _AllMultiPlayerText.text = "전체 " + PhotonNetwork.CountOfPlayers.ToString() + " 명 접속";
+
                 if (PhotonNetwork.CurrentRoom.PlayerCount == 1 && _isNoEnemy)
                 {
                     _isNoEnemy = false;

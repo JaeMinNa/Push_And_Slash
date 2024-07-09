@@ -80,9 +80,7 @@ public class LobbyController : MonoBehaviour
     private CharacterData _playerData;
     private DataWrapper _dataWrapper;
     private RankSystem _rankSystem;
-
-    [SerializeField] private TMP_Text text1;
-    [SerializeField] private TMP_Text text2;
+    private bool _reWardStart;
 
     private void Awake()
     {
@@ -99,6 +97,7 @@ public class LobbyController : MonoBehaviour
         _characterNum = -1;
         _charactetSelectNum = -1;
         _drawCount = 0;
+        _reWardStart = false;
 
         if (PlayerPrefs.GetInt("Tutorial") == 0) CharacterSelectActive();
 
@@ -114,12 +113,6 @@ public class LobbyController : MonoBehaviour
         GameManager.I.BackendManager.Save();
         UpdateRank(GameManager.I.DataManager.GameData.RankPoint);
         GameManager.I.DataManager.DataSave();
-    }
-
-    private void Update()
-    {
-        text1.text = "µÚ³¡ ¿¬°á ? : " + GameManager.I.BackendManager.IsConnect();
-        text2.text = "GameData.LoginID : " + GameManager.I.DataManager.GameData.LoginID;
     }
 
     public void ButtonClickMiss()
@@ -191,23 +184,21 @@ public class LobbyController : MonoBehaviour
         }
     }
 
-    //private int FindCharacterDataOrder(CharacterData data)
-    //{
-    //    int count = _dataWrapper.CharacterDatas.Length;
-
-    //    for (int i = 0; i < count; i++)
-    //    {
-    //        if (data.Tag == _dataWrapper.CharacterDatas[i].Tag) return i;
-    //        else continue;
-    //    }
-
-    //    return -1;
-    //}
-
     public void RewardAdButton()
     {
-        GameManager.I.SoundManager.StartSFX("ButtonClick");
-        GameManager.I.AdsManager.LoadRewardedAd();
+        if(!_reWardStart)
+        {
+            _reWardStart = true;
+            GameManager.I.SoundManager.StartSFX("ButtonClick");
+            GameManager.I.AdsManager.LoadRewardedAd();
+            StartCoroutine(COReWardStartFalse());
+        }
+    }
+
+    IEnumerator COReWardStartFalse()
+    {
+        yield return new WaitForSeconds(3f);
+        _reWardStart = false;
     }
     #endregion
 
@@ -602,70 +593,6 @@ public class LobbyController : MonoBehaviour
     {
         if(num == 1)
         {
-            if (_gameData.Coin < 200)
-            {
-                GameManager.I.SoundManager.StartSFX("ButtonClickMiss");
-            }
-            else
-            {
-                GameManager.I.SoundManager.StartSFX("CharacterGetButton");
-                GameManager.I.DataManager.GameData.Coin -= 200;
-                _shopCoinText.text = _gameData.Coin.ToString();
-
-                // »Ì±â È®·ü ¼³Á¤
-                DrawCharacter(70, 25, 4, 1);
-                
-                HeroPanelSetting();
-                HeroDrawOKButtonSetting(1);
-
-                _heroPanel.SetActive(true);
-            }
-        }
-        else if (num == 10)
-        {
-            if(_drawCount == 0)
-            {
-                if (_gameData.Coin < 1800)
-                {
-                    GameManager.I.SoundManager.StartSFX("ButtonClickMiss");
-                }
-                else
-                {
-                    GameManager.I.SoundManager.StartSFX("CharacterGetButton");
-                    GameManager.I.DataManager.GameData.Coin -= 1800;
-                    _shopCoinText.text = _gameData.Coin.ToString();
-
-                    // »Ì±â È®·ü ¼³Á¤
-                    DrawCharacter(70, 25, 4, 1);
-
-                    HeroPanelSetting();
-                    HeroDrawOKButtonSetting(2);
-
-                    _heroPanel.SetActive(true);
-                }
-            }
-            else
-            {
-                GameManager.I.SoundManager.StartSFX("CharacterGetButton");
-
-                // »Ì±â È®·ü ¼³Á¤
-                DrawCharacter(70, 25, 4, 1);
-
-                HeroPanelSetting();
-                HeroDrawOKButtonSetting(2);
-
-                _heroPanel.SetActive(true);
-            }
-        }
-
-        //CharacterStatSetting();
-        GameManager.I.DataManager.DataSave();
-    }
-
-    public void DrawRareCharacterButton(int num)
-    {
-        if (num == 1)
-        {
             if (_gameData.Coin < 500)
             {
                 GameManager.I.SoundManager.StartSFX("ButtonClickMiss");
@@ -677,17 +604,17 @@ public class LobbyController : MonoBehaviour
                 _shopCoinText.text = _gameData.Coin.ToString();
 
                 // »Ì±â È®·ü ¼³Á¤
-                DrawCharacter(50, 35, 10, 5);
-
+                DrawCharacter(90, 9, 1, 0);
+                
                 HeroPanelSetting();
-                HeroDrawOKButtonSetting(3);
+                HeroDrawOKButtonSetting(1);
 
                 _heroPanel.SetActive(true);
             }
         }
         else if (num == 10)
         {
-            if (_drawCount == 0)
+            if(_drawCount == 0)
             {
                 if (_gameData.Coin < 4500)
                 {
@@ -700,10 +627,10 @@ public class LobbyController : MonoBehaviour
                     _shopCoinText.text = _gameData.Coin.ToString();
 
                     // »Ì±â È®·ü ¼³Á¤
-                    DrawCharacter(50, 35, 10, 5);
+                    DrawCharacter(90, 9, 1, 0);
 
                     HeroPanelSetting();
-                    HeroDrawOKButtonSetting(4);
+                    HeroDrawOKButtonSetting(2);
 
                     _heroPanel.SetActive(true);
                 }
@@ -713,20 +640,19 @@ public class LobbyController : MonoBehaviour
                 GameManager.I.SoundManager.StartSFX("CharacterGetButton");
 
                 // »Ì±â È®·ü ¼³Á¤
-                DrawCharacter(50, 35, 10, 5);
+                DrawCharacter(90, 9, 1, 0);
 
                 HeroPanelSetting();
-                HeroDrawOKButtonSetting(4);
+                HeroDrawOKButtonSetting(2);
 
                 _heroPanel.SetActive(true);
             }
         }
 
-        //CharacterStatSetting();
         GameManager.I.DataManager.DataSave();
     }
 
-    public void DrawUniqueCharacterButton(int num)
+    public void DrawRareCharacterButton(int num)
     {
         if (num == 1)
         {
@@ -741,10 +667,10 @@ public class LobbyController : MonoBehaviour
                 _shopCoinText.text = _gameData.Coin.ToString();
 
                 // »Ì±â È®·ü ¼³Á¤
-                DrawCharacter(40, 30, 20, 10);
+                DrawCharacter(80, 15, 4, 1);
 
                 HeroPanelSetting();
-                HeroDrawOKButtonSetting(5);
+                HeroDrawOKButtonSetting(3);
 
                 _heroPanel.SetActive(true);
             }
@@ -764,7 +690,70 @@ public class LobbyController : MonoBehaviour
                     _shopCoinText.text = _gameData.Coin.ToString();
 
                     // »Ì±â È®·ü ¼³Á¤
-                    DrawCharacter(40, 30, 20, 10);
+                    DrawCharacter(80, 15, 4, 1);
+
+                    HeroPanelSetting();
+                    HeroDrawOKButtonSetting(4);
+
+                    _heroPanel.SetActive(true);
+                }
+            }
+            else
+            {
+                GameManager.I.SoundManager.StartSFX("CharacterGetButton");
+
+                // »Ì±â È®·ü ¼³Á¤
+                DrawCharacter(80, 15, 4, 1);
+
+                HeroPanelSetting();
+                HeroDrawOKButtonSetting(4);
+
+                _heroPanel.SetActive(true);
+            }
+        }
+
+        GameManager.I.DataManager.DataSave();
+    }
+
+    public void DrawUniqueCharacterButton(int num)
+    {
+        if (num == 1)
+        {
+            if (_gameData.Coin < 1500)
+            {
+                GameManager.I.SoundManager.StartSFX("ButtonClickMiss");
+            }
+            else
+            {
+                GameManager.I.SoundManager.StartSFX("CharacterGetButton");
+                GameManager.I.DataManager.GameData.Coin -= 1500;
+                _shopCoinText.text = _gameData.Coin.ToString();
+
+                // »Ì±â È®·ü ¼³Á¤
+                DrawCharacter(70, 20, 7, 3);
+
+                HeroPanelSetting();
+                HeroDrawOKButtonSetting(5);
+
+                _heroPanel.SetActive(true);
+            }
+        }
+        else if (num == 10)
+        {
+            if (_drawCount == 0)
+            {
+                if (_gameData.Coin < 13500)
+                {
+                    GameManager.I.SoundManager.StartSFX("ButtonClickMiss");
+                }
+                else
+                {
+                    GameManager.I.SoundManager.StartSFX("CharacterGetButton");
+                    GameManager.I.DataManager.GameData.Coin -= 13500;
+                    _shopCoinText.text = _gameData.Coin.ToString();
+
+                    // »Ì±â È®·ü ¼³Á¤
+                    DrawCharacter(70, 20, 7, 3);
 
                     HeroPanelSetting();
                     HeroDrawOKButtonSetting(6);
@@ -777,7 +766,7 @@ public class LobbyController : MonoBehaviour
                 GameManager.I.SoundManager.StartSFX("CharacterGetButton");
 
                 // »Ì±â È®·ü ¼³Á¤
-                DrawCharacter(40, 30, 20, 10);
+                DrawCharacter(70, 20, 7, 3);
 
                 HeroPanelSetting();
                 HeroDrawOKButtonSetting(6);
@@ -786,7 +775,6 @@ public class LobbyController : MonoBehaviour
             }
         }
 
-        //CharacterStatSetting();
         GameManager.I.DataManager.DataSave();
     }
 

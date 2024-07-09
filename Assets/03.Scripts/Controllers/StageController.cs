@@ -34,7 +34,9 @@ public class StageController : MonoBehaviour
     private bool _isGameOver;
 
     [Header("StageTitle")]
-    [SerializeField] private TMP_Text _stageTitleText;
+    [SerializeField] private GameObject _stageTitle;
+    [SerializeField] private TMP_Text _stageTitleNormalText;
+    [SerializeField] private TMP_Text _stageTitleBossText;
 
     [Header("Camera")]
     [SerializeField] private GameObject _virtualCamera;
@@ -69,7 +71,9 @@ public class StageController : MonoBehaviour
         {
             _time = 180f;
             StageSetting();
-            GameManager.I.SoundManager.StartBGM("BattleScene");
+
+            if(_gameData.Stage % 5 == 0) GameManager.I.SoundManager.StartBGM("BossScene");
+            else GameManager.I.SoundManager.StartBGM("BattleScene");
         }
         else if (GameManager.I.ScenesManager.CurrentSceneName == "MultiBattleScene1")
         {
@@ -132,13 +136,23 @@ public class StageController : MonoBehaviour
     {
         if (GameManager.I.ScenesManager.CurrentSceneName == "BattleScene1")
         {
+            if(_gameData.Stage % 5 == 0)
+            {
+                _stageTitle.transform.GetChild(1).gameObject.SetActive(true);
+            }
+            else
+            {
+                _stageTitle.transform.GetChild(0).gameObject.SetActive(true);
+            }
+
             string name = GameManager.I.ScenesManager.CurrentSceneName.Substring(11);
-            _stageTitleText.text = _stageText.text = "Chapter " + name + "-" + _gameData.Stage;
+            _stageTitleNormalText.text = _stageText.text = "Chapter " + name + "-" + _gameData.Stage;
+            _stageTitleBossText.text = _stageText.text = "Chapter " + name + "-" + _gameData.Stage;
             _stageText.text = "Chapter " + name + "-" + _gameData.Stage;
         }
         else if(GameManager.I.ScenesManager.CurrentSceneName == "MultiBattleScene1")
         {
-            _stageTitleText.text = "MULTI PLAY";
+            _stageTitleNormalText.text = "MULTI PLAY";
             _stageText.text = "MULTI PLAY";
         }
         
@@ -341,7 +355,7 @@ public class StageController : MonoBehaviour
     {
         if (_dataManager.PlayerData.Level >= 30)
         {
-            GameManager.I.DataManager.PlayerData.CurrentExp += 0;
+            GameManager.I.DataManager.PlayerData.CurrentExp = 0;
             return;
         }
 
