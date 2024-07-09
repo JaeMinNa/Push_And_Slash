@@ -122,6 +122,8 @@ public class StageController : MonoBehaviour
     #region UI
     private void TimeTextUpdate()
     {
+        if (_time <= 0) _timeText.text = "0:00";
+
         string text;
         if (Mathf.Floor(_time % 60) < 10)
         {
@@ -353,7 +355,7 @@ public class StageController : MonoBehaviour
 
     private void LevelExpUp(int exp)
     {
-        if (_dataManager.PlayerData.Level >= 30)
+        if (_dataManager.PlayerData.Level >= 50)
         {
             GameManager.I.DataManager.PlayerData.CurrentExp = 0;
             return;

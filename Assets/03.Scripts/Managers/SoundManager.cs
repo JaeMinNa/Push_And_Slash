@@ -104,6 +104,7 @@ public class SoundManager : MonoBehaviour
         _sfx.Add("EnemySwordSkill", Resources.Load<AudioClip>("Sounds/SFX/Enemy/EnemySwordSkill"));
         _sfx.Add("EnemyFlashMissilePinkShoot", Resources.Load<AudioClip>("Sounds/SFX/Enemy/EnemyFlashMissilePinkShoot"));
         _sfx.Add("EnemyFlashMissilePinkExplosion", Resources.Load<AudioClip>("Sounds/SFX/Enemy/EnemyFlashMissilePinkExplosion"));
+        _sfx.Add("Text", Resources.Load<AudioClip>("Sounds/SFX/UI/Text"));
     }
 
     private void Start()

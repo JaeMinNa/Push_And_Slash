@@ -202,6 +202,7 @@ public class UIManager : MonoBehaviour
                 _playerCharacter.Crouch();
                 _dashTime = 0f;
             }
+            else GameManager.I.SoundManager.StartSFX("ButtonClickMiss");
         }
         else if (GameManager.I.ScenesManager.CurrentSceneName == "MultiBattleScene1")
         {
@@ -214,6 +215,7 @@ public class UIManager : MonoBehaviour
                     _playerCharacter.Crouch();
                     _dashTime = 0f;
                 }
+                else GameManager.I.SoundManager.StartSFX("ButtonClickMiss");
             }
         }
     }
@@ -230,6 +232,7 @@ public class UIManager : MonoBehaviour
                 _skillTime = 0f;
                 _playerCharacter.IsSkill = true;
             }
+            else GameManager.I.SoundManager.StartSFX("ButtonClickMiss");
         }
         else if (GameManager.I.ScenesManager.CurrentSceneName == "MultiBattleScene1")
         {
@@ -243,6 +246,7 @@ public class UIManager : MonoBehaviour
                     _skillTime = 0f;
                     _playerCharacter.IsSkill = true;
                 }
+                else GameManager.I.SoundManager.StartSFX("ButtonClickMiss");
             }
         }
     }

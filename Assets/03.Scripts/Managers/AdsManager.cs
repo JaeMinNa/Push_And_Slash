@@ -266,7 +266,7 @@ public class AdsManager : MonoBehaviour
 
     IEnumerator CORewardSetting()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(2f);
 
         if (GameManager.I.ScenesManager.CurrentSceneName == "LobbyScene")
         {

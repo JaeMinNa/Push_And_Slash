@@ -294,6 +294,7 @@ namespace ECM2.Examples.Slide
         {
             maxWalkSpeed = _playerData.Speed;
             slideImpulse = _playerData.DashImpulse;
+            _rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
         }
 
         public void PlayerNuckback(Vector3 attackPosition, float power)
