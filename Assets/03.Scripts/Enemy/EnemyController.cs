@@ -14,6 +14,9 @@ public class EnemyController : MonoBehaviour
         Enemy4,
         Enemy5,
         Boss0,
+        Boss1,
+        Boss2,
+        Boss3
     }
 
     public EnemyStateContext _enemyStateContext { get; private set; }
@@ -133,6 +136,16 @@ public class EnemyController : MonoBehaviour
             case EnemyType.Boss0:
                 EnemyData = GameManager.I.DataManager.DataWrapper.EnemyDatas[6];
                 break;
+            case EnemyType.Boss1:
+                EnemyData = GameManager.I.DataManager.DataWrapper.EnemyDatas[7];
+                break;
+            case EnemyType.Boss2:
+                EnemyData = GameManager.I.DataManager.DataWrapper.EnemyDatas[8];
+                break;
+            case EnemyType.Boss3:
+                EnemyData = GameManager.I.DataManager.DataWrapper.EnemyDatas[9];
+                break;
+
 
             default:
                 break;

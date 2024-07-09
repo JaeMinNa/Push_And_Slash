@@ -97,6 +97,13 @@ public class SoundManager : MonoBehaviour
         _sfx.Add("Coin", Resources.Load<AudioClip>("Sounds/SFX/UI/Coin"));
         _sfx.Add("EnemyFireBallGreenExplosion", Resources.Load<AudioClip>("Sounds/SFX/Enemy/EnemyFireBallGreenExplosion"));
         _sfx.Add("EnemyFireBallGreenShoot", Resources.Load<AudioClip>("Sounds/SFX/Enemy/EnemyFireBallGreenShoot"));
+        _sfx.Add("EnemyNovaSoftBlueExplosion", Resources.Load<AudioClip>("Sounds/SFX/Enemy/EnemyNovaSoftBlueExplosion"));
+        _sfx.Add("EnemyNovaSoftBlueShoot", Resources.Load<AudioClip>("Sounds/SFX/Enemy/EnemyNovaSoftBlueShoot"));
+        _sfx.Add("EnemyNukeGreenExplosion", Resources.Load<AudioClip>("Sounds/SFX/Enemy/EnemyNukeGreenExplosion"));
+        _sfx.Add("EnemyNukeGreenShoot", Resources.Load<AudioClip>("Sounds/SFX/Enemy/EnemyNukeGreenShoot"));
+        _sfx.Add("EnemySwordSkill", Resources.Load<AudioClip>("Sounds/SFX/Enemy/EnemySwordSkill"));
+        _sfx.Add("EnemyFlashMissilePinkShoot", Resources.Load<AudioClip>("Sounds/SFX/Enemy/EnemyFlashMissilePinkShoot"));
+        _sfx.Add("EnemyFlashMissilePinkExplosion", Resources.Load<AudioClip>("Sounds/SFX/Enemy/EnemyFlashMissilePinkExplosion"));
     }
 
     private void Start()

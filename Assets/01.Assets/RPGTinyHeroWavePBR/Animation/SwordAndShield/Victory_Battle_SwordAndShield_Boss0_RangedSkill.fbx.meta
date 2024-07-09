@@ -60,16 +60,16 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.51458335
-        functionName: ShootRangedAttack
-        data: FireBallGreen
+      - time: 0.5134812
+        functionName: StartRangedSFX
+        data: EnemyNukeGreenShoot
         objectReferenceParameter: {fileID: 11500000, guid: 3f509bb9264552d419fd8b8b9f101700, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.51911503
-        functionName: StartRangedSFX
-        data: EnemyFireBallGreenShoot
+      - time: 0.51458335
+        functionName: ShootRangedAttack
+        data: NukeGreen
         objectReferenceParameter: {fileID: 11500000, guid: 3f509bb9264552d419fd8b8b9f101700, type: 3}
         floatParameter: 0
         intParameter: 0

@@ -37,8 +37,8 @@ public class Arrow : MonoBehaviour
 
         if (CharacterType == Type.Enemy)
         {
-            _dir = (_player.transform.position + new Vector3(0, 0.5f, 0) - transform.position).normalized;
-            transform.LookAt(_player.transform.position + new Vector3(0, 0.5f, 0));
+            //_dir = (_player.transform.position + new Vector3(0, 0.5f, 0) - transform.position).normalized;
+            //transform.LookAt(_player.transform.position + new Vector3(0, 0.5f, 0));
         }
         else if (CharacterType == Type.Player)
         {
