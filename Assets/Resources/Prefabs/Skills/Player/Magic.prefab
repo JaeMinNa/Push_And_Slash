@@ -104,7 +104,7 @@ MonoBehaviour:
   Atk: 0
   _targets: []
   _overlapSphereRange: 1.5
-  _speed: 10
+  _speed: 8
 --- !u!114 &7861804730498058231
 MonoBehaviour:
   m_ObjectHideFlags: 0

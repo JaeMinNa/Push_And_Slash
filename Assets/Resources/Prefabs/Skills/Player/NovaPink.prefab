@@ -103,4 +103,4 @@ MonoBehaviour:
   Atk: 0
   _targets: []
   _overlapSphereRange: 1.5
-  _speed: 10
+  _speed: 8

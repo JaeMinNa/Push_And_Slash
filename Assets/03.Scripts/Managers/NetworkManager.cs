@@ -126,6 +126,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             else if(PhotonNetwork.CurrentRoom.PlayerCount == 1 && _isMultiFull && !_player.GetComponent<PlayerCharacter>().IsFinish)
             {
                 _isMultiFull = false;
+                DisConnect();
                 _stageController.GameClear();
             }
         }
@@ -156,10 +157,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {
             
         }
-        //else if (GameManager.I.ScenesManager.CurrentSceneName == "BattleScene1")
-        //{
-        //    CreateRoom();
-        //}
     }
 
     public void DisConnect()
