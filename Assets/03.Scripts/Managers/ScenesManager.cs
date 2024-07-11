@@ -40,9 +40,10 @@ public class ScenesManager : MonoBehaviour
         if(CurrentSceneName == "MultiBattleScene1")
         {
             if(GameManager.I.DataManager.GameData.RankPoint >= 1) GameManager.I.DataManager.GameData.RankPoint--;
-            if (GameManager.I.DataManager.GameData.Lose >= 1) GameManager.I.DataManager.GameData.Lose++;
+            GameManager.I.DataManager.GameData.Lose++;
 
             GameManager.I.DataManager.DataSave();
+            GameManager.I.BackendManager.Save();
         }
     }
 }

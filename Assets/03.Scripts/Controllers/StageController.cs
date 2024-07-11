@@ -235,6 +235,7 @@ public class StageController : MonoBehaviour
 
         _gameClear.SetActive(true);
         GameManager.I.DataManager.DataSave();
+        GameManager.I.BackendManager.Save();
     }
 
     public void GameOver()
@@ -268,6 +269,7 @@ public class StageController : MonoBehaviour
 
         _gameOver.SetActive(true);
         GameManager.I.DataManager.DataSave();
+        GameManager.I.BackendManager.Save();
     }
 
     private void StageSetting()
@@ -313,7 +315,7 @@ public class StageController : MonoBehaviour
         if (GameManager.I.ScenesManager.CurrentSceneName == "MultiBattleScene1") _networkManager.DisConnect();
 
         if (GameManager.I.DataManager.GameData.RankPoint >= 1) GameManager.I.DataManager.GameData.RankPoint--;
-        if (GameManager.I.DataManager.GameData.Lose >= 1) GameManager.I.DataManager.GameData.Lose++;
+        GameManager.I.DataManager.GameData.Lose++;
         
         GameManager.I.DataManager.DataSave();
         GameManager.I.SoundManager.StartSFX("ButtonClick");
