@@ -11,6 +11,7 @@ public class ScenesManager : MonoBehaviour
 
     public void Init()
     {
+        Screen.fullScreen = true;
         CurrentSceneName = SceneManager.GetActiveScene().name;
 
         if (CurrentSceneName == "BattleScene1")
