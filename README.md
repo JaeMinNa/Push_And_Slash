@@ -39,17 +39,16 @@
 <br/>
 
 ## 🔳 와이어 프레임
-![image](https://github.com/JaeMinNa/CastleDefence2D/assets/149379194/e4e6cb5f-0754-496b-8b76-ab81b40c503b)
-![image](https://github.com/JaeMinNa/CastleDefence2D/assets/149379194/946f7205-8b3d-4dd3-bf66-185bb4ddce80)
+![image](https://github.com/user-attachments/assets/0099b12e-d1b4-4eeb-bbde-5fdb65517eed)
 
 
 ## 🧩 클라이언트 구조
 
 ### GameManager
-![image](https://github.com/JaeMinNa/CastleDefence2D/assets/149379194/82d943a9-0013-4c2d-a27c-590612208480)
+![image](https://github.com/user-attachments/assets/38eb976c-8e82-4986-9e37-44602d08803a)
 
 ### Enemy
-![image](https://github.com/JaeMinNa/CastleDefence2D/assets/149379194/751c8abd-d84f-4597-b9d7-98ec8e6784eb)
+![image](https://github.com/user-attachments/assets/5a388a6d-9ddf-48c5-be22-65edad0331ef)
 
 
 ## ✏️ 구현 기능
