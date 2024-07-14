@@ -215,6 +215,12 @@ private IEnumerator COAttackColliderInactive(float time)
 	}
 }
 ```
+<br/>
+
+- Animation Events 등록
+<img src="https://github.com/user-attachments/assets/04cffd69-7ba3-4f76-85e7-ee4d40f5b176" width="50%"/>
+<br/>
+<br/>
 
 - OnPhotonSerializeView 함수를 통해, 능력치 데이터 송수신
 ```C#
@@ -242,7 +248,8 @@ public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     }
 }
 ``` 
-​
+​<br/>
+
 - RPC를 통해, SetTrigger 실행
 ```C#
 [PunRPC]
@@ -251,6 +258,7 @@ public void PlayerAttackRPC()
     _anim.SetTrigger("Attack");
 }
 ```
+<br/>
 
 - RPC를 통해, 넉백 구현
 ```C#
