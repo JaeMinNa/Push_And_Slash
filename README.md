@@ -250,8 +250,10 @@ public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
 ``` 
 ​<br/>
 
-- RPC를 통해, SetTrigger 실행
+- RPC를 통해, 공격 애니메이션 실행
 ```C#
+if (PhotonView.IsMine) PhotonView.RPC("PlayerAttackRPC", RpcTarget.AllViaServer);
+
 [PunRPC]
 public void PlayerAttackRPC()
 {
@@ -262,6 +264,18 @@ public void PlayerAttackRPC()
 
 - RPC를 통해, 넉백 구현
 ```C#
+private void OnTriggerEnter(Collider other)
+{
+    if (other.gameObject.CompareTag("Player")
+    {
+	if (!_photonView.IsMine)
+	{
+	    _atk = _playerCharacter.Atk;
+	    other.GetComponent<PlayerCharacter>().PhotonView.RPC("RPCPlayerNuckback", RpcTarget.AllViaServer, _playerCharacter.transform.position, _atk);
+	}
+    }
+}
+
 [PunRPC]
 public void RPCPlayerNuckback(Vector3 attackPosition, float power)
 {
