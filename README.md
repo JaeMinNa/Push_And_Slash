@@ -175,8 +175,8 @@ public void ChatRPC(string str)
 <br/>
 <br/>
 - Synchronize Parameters에서 Bool Parameter를 Continuous 설정
+<br/>
 - Trigger Parameter의 경우, RPC 함수를 통해 동기화해야 하므로, Disabled로 설정
-
 <img src="https://github.com/user-attachments/assets/fe0ac5fd-96f7-44a6-8ec1-49d043f0c73a" width="50%"/>
 <br/>
 <br/>
