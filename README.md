@@ -229,9 +229,6 @@ public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     // 데이터 보내기 (isMine == true)
     if (stream.IsWriting)
     {
-        stream.SendNext(transform.position);
-        stream.SendNext(transform.rotation);
-        stream.SendNext(new Vector3(transform.forward.x, 0, transform.forward.z));
         stream.SendNext(GameManager.I.DataManager.PlayerData.Atk);
         stream.SendNext(GameManager.I.DataManager.PlayerData.SkillAtk);
         stream.SendNext(GameManager.I.DataManager.PlayerData.Def);
@@ -239,9 +236,6 @@ public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     // 데이터 받기 (isMine == false)
     else
     {
-        _playerPosition = (Vector3)stream.ReceiveNext();
-        _playerRotation = (Quaternion)stream.ReceiveNext();
-        PlayerDirection = (Vector3)stream.ReceiveNext();
         Atk = (float)stream.ReceiveNext();
         SkillAtk = (float)stream.ReceiveNext();
         Def = (float)stream.ReceiveNext();
