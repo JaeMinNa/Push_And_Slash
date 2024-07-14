@@ -79,7 +79,8 @@ public override void OnJoinedRoom()
     PhotonNetwork.Instantiate("PUN2/Room/RoomController", transform.position, Quaternion.identity);
 }
 ``` 
-​
+​<br/>
+
 - RoomController 생성 : OnPhotonSerializeView 함수를 통해, Room 데이터를 송수신
 <img src="https://github.com/user-attachments/assets/4188147c-cc8d-45b1-a50b-b33c786f97c0" width="50%"/>
 <br/>
