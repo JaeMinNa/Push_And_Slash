@@ -53,8 +53,104 @@
 
 ## ✏️ 구현 기능
 
-### 1. 상태 패턴 구현
-<img src="https://github.com/JaeMinNa/CastleDefence2D/assets/149379194/76266ccb-1def-47b6-adbb-e9cc4239b6f7" width="50%"/>
+### 1. 멀티 대전 입장
+<img src="https://github.com/user-attachments/assets/ca915275-4091-425c-84de-1c4774e1dbed" width="50%"/>
+
+#### 구현 이유
+- PUN2 멀티 서버 연결
+- PVP 시작 전, 대기방 필요
+
+#### 구현 방법
+- NetworkManager : 서버 접속, Room 생성 및 참가 관리
+```C#
+public void Connect()
+{
+    PhotonNetwork.ConnectUsingSettings();
+}
+
+public void JoinRandomOrCreateRoom()
+{
+    PhotonNetwork.JoinRandomOrCreateRoom(expectedMaxPlayers : 2, roomOptions : new RoomOptions() { MaxPlayers = 2 });
+}
+
+public override void OnJoinedRoom()
+{
+    Debug.Log("방참가완료");
+    PhotonNetwork.Instantiate("PUN2/Room/RoomController", transform.position, Quaternion.identity);
+}
+``` 
+​
+- RoomController : OnPhotonSerializeView 함수를 통해, Room 데이터를 전송
+<img src="https://github.com/user-attachments/assets/4188147c-cc8d-45b1-a50b-b33c786f97c0" width="50%"/>
+<br/>
+<br/>
+
+```C#
+public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+{
+    if (stream.IsWriting)
+    {
+        stream.SendNext(GameManager.I.DataManager.PlayerData.KoreaTag);
+        stream.SendNext(GameManager.I.DataManager.PlayerData.Level);
+        stream.SendNext(GameManager.I.DataManager.PlayerData.CharacterRank.ToString());
+        stream.SendNext(GameManager.I.DataManager.GameData.UserName);
+        stream.SendNext(GameManager.I.DataManager.GameData.RankPoint);
+        stream.SendNext(GameManager.I.DataManager.PlayerData.Star);
+        stream.SendNext(GameManager.I.DataManager.PlayerData.Tag);
+    }
+    else
+    {
+        _roomEnemyCharacterName = (string)stream.ReceiveNext();
+        _roomEnemyCharacterLevel = (int)stream.ReceiveNext();
+        _roomEnemyCharacterRank = (string)stream.ReceiveNext();
+        _roomEnemyUserName = (string)stream.ReceiveNext();
+        _roomEnemyRankPoint = (int)stream.ReceiveNext();
+        _roomEnemyCharacterStar = (int)stream.ReceiveNext();
+        _roomEnemyCharacterKorTag = (string)stream.ReceiveNext();
+    }
+}
+```
+​
+- State 스크립트 : 각 State를 정의, State 변경 조건 설정
+```C#
+// Start문과 동일하게 사용
+public void Handle(EnemyController enemyController)
+{
+    if (!_enemyController)
+        _enemyController = enemyController;
+
+    Debug.Log("Idle 상태 시작");   
+    _idleTime = 3f;
+    _time = 0;
+
+    StartCoroutine(COUpdate());
+}
+
+// Update문과 동일하게 사용
+IEnumerator COUpdate()
+{
+  while (true)
+  {
+  	// 각각의 상태 변환 조건 설정
+	if(_enemyController.Ishit)
+    	{
+		_enemyController.HitStart();
+		break;
+	}
+	if(_enemyController.IsAttack)
+	{
+		_enemyController.AttackStart();
+		break;
+	}
+    
+      yield return null;
+  }
+}
+```
+<br/>
+
+### 10. Enemy 상태 패턴 구현
+<img src="https://github.com/user-attachments/assets/ca915275-4091-425c-84de-1c4774e1dbed" width="50%"/>
 
 #### 구현 이유
 - 다양한 상태를 가진 Player와 Enemy 움직임 구현
