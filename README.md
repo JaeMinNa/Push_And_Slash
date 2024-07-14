@@ -110,6 +110,7 @@ public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     }
 }
 ```
+<br/>
 
 ### 2. 멀티 채팅 구현
 <img src="https://github.com/user-attachments/assets/3c3123b6-2357-4c31-8c5c-70267dd60e79" width="50%"/>
@@ -155,7 +156,8 @@ public void ChatRPC(string str)
         _chatTexts[_chatTexts.Length - 1].text = str;
     }
 }
-``` 
+```
+<br/>
 ​
 ### 10. Enemy 상태 패턴 구현
 <img src="https://github.com/user-attachments/assets/ca915275-4091-425c-84de-1c4774e1dbed" width="50%"/>
