@@ -181,6 +181,97 @@ public void ChatRPC(string str)
 <br/>
 <br/>
 
+### 4. PVP 구현
+<img src="https://github.com/user-attachments/assets/eea1b5b6-0044-4df5-b82e-da66317591f7" width="50%"/>
+
+#### 구현 이유
+- 멀티 공격, 넉백 구현
+
+#### 구현 방법
+- Weapon Collider를 활성화하는 함수 작성
+<img src="https://github.com/user-attachments/assets/30d10b39-db25-4103-8f9e-aacb0703196f" width="50%"/>
+<br/>
+<br/>
+```C#
+public void AttackColliderActive(float time)
+{
+	for (int i = 0; i < _weaponColliders.Length; i++)
+	{
+	    _weaponColliders[i].enabled = true;
+	}
+	
+	StartCoroutine(COAttackColliderInactive(time));
+}
+
+private IEnumerator COAttackColliderInactive(float time)
+{
+	yield return new WaitForSeconds(time);
+	
+	for (int i = 0; i < _weaponColliders.Length; i++)
+	{
+	    _weaponColliders[i].enabled = false;
+	}
+}
+```
+
+- OnPhotonSerializeView 함수를 통해, 능력치 데이터 송수신
+```C#
+public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+{
+    // 데이터 보내기 (isMine == true)
+    if (stream.IsWriting)
+    {
+        stream.SendNext(transform.position);
+        stream.SendNext(transform.rotation);
+        stream.SendNext(new Vector3(transform.forward.x, 0, transform.forward.z));
+        stream.SendNext(GameManager.I.DataManager.PlayerData.Atk);
+        stream.SendNext(GameManager.I.DataManager.PlayerData.SkillAtk);
+        stream.SendNext(GameManager.I.DataManager.PlayerData.Def);
+    }
+    // 데이터 받기 (isMine == false)
+    else
+    {
+        _playerPosition = (Vector3)stream.ReceiveNext();
+        _playerRotation = (Quaternion)stream.ReceiveNext();
+        PlayerDirection = (Vector3)stream.ReceiveNext();
+        Atk = (float)stream.ReceiveNext();
+        SkillAtk = (float)stream.ReceiveNext();
+        Def = (float)stream.ReceiveNext();
+    }
+}
+``` 
+​
+- RPC를 통해, SetTrigger 실행
+```C#
+[PunRPC]
+public void PlayerAttackRPC()
+{
+    _anim.SetTrigger("Attack");
+}
+```
+
+- RPC를 통해, 넉백 구현
+```C#
+[PunRPC]
+public void RPCPlayerNuckback(Vector3 attackPosition, float power)
+{
+    if (PhotonView.IsMine) PhotonView.RPC("PlayerHitRPC", RpcTarget.AllViaServer);
+    Vector3 dir = (transform.position - attackPosition).normalized;
+
+    if (PhotonView.IsMine) _rigidbody.velocity = new Vector3(dir.x, 0, dir.z) * (power - _playerData.Def);
+    else _rigidbody.velocity = new Vector3(dir.x, 0, dir.z) * (power - Def);
+
+    transform.LookAt(attackPosition);
+}
+
+[PunRPC]
+public void PlayerHitRPC()
+{
+    _anim.SetTrigger("Hit");
+}
+```
+<br/>
+
 ### 10. Enemy 상태 패턴 구현
 <img src="https://github.com/user-attachments/assets/ca915275-4091-425c-84de-1c4774e1dbed" width="50%"/>
 
