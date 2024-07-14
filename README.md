@@ -292,7 +292,7 @@ public void PlayerHitRPC()
 <br/>
 
 ### 5. 랭킹 구현
-<img src="https://github.com/user-attachments/assets/972e533d-4f96-496c-9951-e13d1bfdaab2" width="50%"/>
+<img src="https://github.com/user-attachments/assets/cfbc5009-0507-46f7-a827-3ff786e20206" width="50%"/>
 
 #### 구현 이유
 - 경쟁 심리를 이용해서 유저들이 더 게임을 플레이 하도록 하기 위해
@@ -317,7 +317,7 @@ else
 <br/>
 
 - 뒤끝 서버에서 비교할 데이터의 데이터 테이블 생성
-<img src="https://github.com/user-attachments/assets/6b11d889-83ba-4f75-84b8-b5d5da642da1" width="50%"/>
+<img src="https://github.com/user-attachments/assets/e9fc4d4c-2d22-4af5-bf05-ffef142f4600" width="50%"/>
 <br/>
 <br/>
 
@@ -348,8 +348,8 @@ private Param GetUserDataParam()
 ```
 <br/>
 
-- 뒤끝 서버에서 랭킹 추가
-<img src="https://github.com/user-attachments/assets/9dd03a45-acd8-4f80-b240-b67d35dc8e95" width="50%"/>
+- 뒤끝 서버 랭킹 추가
+<img src="https://github.com/user-attachments/assets/116ba23b-1ea3-4fc6-8b37-2cdf6cdf5c61" width="50%"/>
 <br/>
 <br/>
 
@@ -400,7 +400,7 @@ private void UpdateMyRankData(int value)
 ```
 <br/>
 
-- 뒤끝 서버의 Json 데이터를 파싱해서 나의 랭킹 불러오기
+- 뒤끝 서버 Json 데이터를 파싱해서 나의 랭킹 불러오기
 ```C#
 public void GetMyRank()
 {
@@ -439,7 +439,7 @@ public void GetMyRank()
 ```
 <br/>
 
-- 뒤끝 서버의 Json 데이터를 파싱해서 유저 랭킹 불러오기
+- 뒤끝 서버 Json 데이터를 파싱해서 유저 랭킹 불러오기
 ```C#
 private const int MAX_RANK_LIST = 10;
 
