@@ -58,10 +58,10 @@
 
 #### 구현 이유
 - PUN2 멀티 서버 연결
-- PVP 시작 전, 대기방 필요
+- PVP 시작 전, 대기방 구현
 
 #### 구현 방법
-- NetworkManager : 서버 접속, Room 생성 및 참가 관리
+- NetworkManager 생성 : 서버 접속, Room 생성 및 참가 관리
 ```C#
 public void Connect()
 {
@@ -80,7 +80,7 @@ public override void OnJoinedRoom()
 }
 ``` 
 ​
-- RoomController : OnPhotonSerializeView 함수를 통해, Room 데이터를 전송
+- RoomController 생성 : OnPhotonSerializeView 함수를 통해, Room 데이터를 송수신
 <img src="https://github.com/user-attachments/assets/4188147c-cc8d-45b1-a50b-b33c786f97c0" width="50%"/>
 <br/>
 <br/>
@@ -110,45 +110,53 @@ public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     }
 }
 ```
-​
-- State 스크립트 : 각 State를 정의, State 변경 조건 설정
+
+### 2. 멀티 채팅 구현
+<img src="https://github.com/user-attachments/assets/3c3123b6-2357-4c31-8c5c-70267dd60e79" width="50%"/>
+
+#### 구현 이유
+- 멀티 게임 시작 전, 의사소통 목적
+
+#### 구현 방법
+- PhotonView.RPC 함수를 통해, 모든 Player가 동시에 함수 실행
 ```C#
-// Start문과 동일하게 사용
-public void Handle(EnemyController enemyController)
+private void SendChat()
 {
-    if (!_enemyController)
-        _enemyController = enemyController;
-
-    Debug.Log("Idle 상태 시작");   
-    _idleTime = 3f;
-    _time = 0;
-
-    StartCoroutine(COUpdate());
+    if (_photonView.IsMine)
+    {
+        string chat = PhotonNetwork.NickName + " : " + _networkManager.ChatInputText.text;
+        _photonView.RPC("ChatRPC", RpcTarget.All, chat);
+        _networkManager.ChatInputText.text = "";
+    }
 }
 
-// Update문과 동일하게 사용
-IEnumerator COUpdate()
+[PunRPC]
+public void ChatRPC(string str)
 {
-  while (true)
-  {
-  	// 각각의 상태 변환 조건 설정
-	if(_enemyController.Ishit)
-    	{
-		_enemyController.HitStart();
-		break;
-	}
-	if(_enemyController.IsAttack)
-	{
-		_enemyController.AttackStart();
-		break;
-	}
-    
-      yield return null;
-  }
-}
-```
-<br/>
+    bool isInput = false;
 
+    for (int i = 0; i < _chatTexts.Length; i++)
+    {
+        if (_chatTexts[i].text == "")
+        {
+            isInput = true;
+            _chatTexts[i].text = str;
+            break;
+        }
+    }
+
+    if (!isInput)
+    {
+        for (int i = 1; i < _chatTexts.Length; i++)
+        {
+            _chatTexts[i - 1].text = _chatTexts[i].text;
+        }
+
+        _chatTexts[_chatTexts.Length - 1].text = str;
+    }
+}
+``` 
+​
 ### 10. Enemy 상태 패턴 구현
 <img src="https://github.com/user-attachments/assets/ca915275-4091-425c-84de-1c4774e1dbed" width="50%"/>
 
