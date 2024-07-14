@@ -182,11 +182,11 @@ public void ChatRPC(string str)
 <br/>
 <br/>
 
-### 4. PVP 구현
+### 4. 멀티 전투 구현
 <img src="https://github.com/user-attachments/assets/eea1b5b6-0044-4df5-b82e-da66317591f7" width="50%"/>
 
 #### 구현 이유
-- 멀티 공격, 넉백 구현
+- 멀티 대전의 전투 시스템 구현을 위해
 
 #### 구현 방법
 - Weapon Collider를 활성화하는 함수 작성
