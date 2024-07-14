@@ -170,10 +170,12 @@ public void ChatRPC(string str)
 <img src="https://github.com/user-attachments/assets/05fb9546-1e0b-41c4-8435-0e27bb8e57a3" width="50%"/>
 <br/>
 <br/>
+
 - PhotonView 컴포넌트 추가 및 Observed Components에 PhotonAnimatorView 추가
 <img src="https://github.com/user-attachments/assets/caa1a31b-b577-4593-b510-28426f1ff30c" width="50%"/>
 <br/>
 <br/>
+
 - Synchronize Parameters에서 Bool Parameter를 Continuous 설정
 <br/>
 - Trigger Parameter의 경우, RPC 함수를 통해 동기화해야 하므로, Disabled로 설정
