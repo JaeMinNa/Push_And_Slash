@@ -113,11 +113,11 @@ public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
 ```
 <br/>
 
-### 2. 멀티 채팅 구현
+### 2. PUN2 멀티 채팅 구현
 <img src="https://github.com/user-attachments/assets/3c3123b6-2357-4c31-8c5c-70267dd60e79" width="50%"/>
 
 #### 구현 이유
-- 멀티 게임 시작 전, 의사소통 목적
+- 입력한 string 데이터를 송수신
 
 #### 구현 방법
 - RPC 함수를 통해, 모든 Player가 동시에 함수 실행
@@ -160,7 +160,7 @@ public void ChatRPC(string str)
 ```
 <br/>
 
-### 3. 멀티 애니메이션 동기화
+### 3. PUN2 멀티 애니메이션 동기화
 <img src="https://github.com/user-attachments/assets/6baf68b3-0a0b-416c-924b-703abcb2b105" width="50%"/>
 
 #### 구현 이유
@@ -183,7 +183,7 @@ public void ChatRPC(string str)
 <br/>
 <br/>
 
-### 4. 멀티 전투 구현
+### 4. PUN2 멀티 전투 구현
 <img src="https://github.com/user-attachments/assets/eea1b5b6-0044-4df5-b82e-da66317591f7" width="50%"/>
 
 #### 구현 이유
