@@ -110,7 +110,7 @@ public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     }
 }
 ```
-
+<br/>
 
 ### 2. 멀티 채팅 구현
 <img src="https://github.com/user-attachments/assets/3c3123b6-2357-4c31-8c5c-70267dd60e79" width="50%"/>
@@ -158,7 +158,27 @@ public void ChatRPC(string str)
 }
 ```
 
-​
+### 3. 멀티 애니메이션 동기화
+<img src="https://github.com/user-attachments/assets/6baf68b3-0a0b-416c-924b-703abcb2b105" width="50%"/>
+
+#### 구현 이유
+- 멀티 PVP에서 애니메이션을 동기화
+
+#### 구현 방법
+- PhotonAnimatorView 컴포넌트 추가
+<img src="https://github.com/user-attachments/assets/05fb9546-1e0b-41c4-8435-0e27bb8e57a3" width="50%"/>
+<br/>
+<br/>
+- PhotonView 컴포넌트 추가 및 Observed Components에 PhotonAnimatorView 추가
+<img src="https://github.com/user-attachments/assets/caa1a31b-b577-4593-b510-28426f1ff30c" width="50%"/>
+<br/>
+<br/>
+- Synchronize Parameters에서 Bool Parameter를 Continuous 설정
+<img src="https://github.com/user-attachments/assets/fe0ac5fd-96f7-44a6-8ec1-49d043f0c73a" width="50%"/>
+* Trigger Parameter의 경우, RPC 함수를 통해 동기화해야 하므로, 
+<br/>
+<br/>
+
 ### 10. Enemy 상태 패턴 구현
 <img src="https://github.com/user-attachments/assets/ca915275-4091-425c-84de-1c4774e1dbed" width="50%"/>
 
