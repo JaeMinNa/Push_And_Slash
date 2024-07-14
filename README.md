@@ -291,6 +291,208 @@ public void PlayerHitRPC()
 ```
 <br/>
 
+### 5. 랭킹 구현
+<img src="https://github.com/user-attachments/assets/972e533d-4f96-496c-9951-e13d1bfdaab2" width="50%"/>
+
+#### 구현 이유
+- 경쟁 심리를 이용해서 유저들이 더 게임을 플레이 하도록 하기 위해
+
+#### 구현 방법
+- 뒤끝 서버 설치 및 서버 접속
+```C#
+private void BackendSetup()
+{
+BackendReturnObject bro = Backend.Initialize(true);
+
+if (bro.IsSuccess())
+{
+    Debug.Log("뒤끝 서버 연동 성공 : " + bro); // 성공일 경우 statusCode 204 Success
+}
+else
+{
+    Debug.LogError("뒤끝 서버 연동 실패 : " + bro); // 실패일 경우 statusCode 400대 에러 발생
+}
+}
+```
+<br/>
+
+- 뒤끝 서버에서 비교할 데이터의 데이터 테이블 생성
+<img src="https://github.com/user-attachments/assets/6b11d889-83ba-4f75-84b8-b5d5da642da1" width="50%"/>
+<br/>
+<br/>
+
+```C#
+// 데이터 테이블에 추가하는 함수
+public void InsertData()
+{
+    Param param = GetUserDataParam();
+    BackendReturnObject bro = Backend.GameData.Insert("USER_DATA", param);
+
+    if (bro.IsSuccess())
+    {
+        Debug.Log("데이터 추가를 성공했습니다");
+    }
+    else
+    {
+        Debug.Log("데이터 추가를 실패했습니다");
+    }
+}
+
+// Param : 데이터를 송수신할 때 사용하는 class
+private Param GetUserDataParam()
+{
+    Param param = new Param();
+    param.Add("RankPoint", GameManager.I.DataManager.GameData.RankPoint);
+    return param;
+}
+```
+<br/>
+
+- 뒤끝 서버에서 랭킹 추가
+<img src="https://github.com/user-attachments/assets/9dd03a45-acd8-4f80-b240-b67d35dc8e95" width="50%"/>
+<br/>
+<br/>
+
+- 랭킹 데이터 갱신
+```C#
+// 데이터 테이블에 추가하는 함수
+private void UpdateMyRankData(int value)
+{
+	string rowInDate = string.Empty;
+
+	// 랭킹 데이터를 업데이트하려면 게임 데이터에서 사용하는 데이터의 inDate 값 필요
+	BackendReturnObject bro = Backend.GameData.GetMyData("USER_DATA", new Where());
+	
+	if (!bro.IsSuccess())
+	{
+	    Debug.LogError("랭킹 업데이트를 위한 데이터 조회 중 문제가 발생했습니다.");
+	    return;
+	}
+	
+	Debug.Log("랭킹 업데이트를 위한 데이터 조회에 성공했습니다.");
+	
+	if(bro.FlattenRows().Count > 0)
+	{
+	    rowInDate = bro.FlattenRows()[0]["inDate"].ToString();
+	}
+	else
+	{
+	    Debug.LogError("데이터가 존재하지 않습니다.");
+	}
+	
+	Param param = new Param()
+	{
+	    {"RankPoint",  value}
+	};
+	
+	// 해당 데이터테이블의 데이터를 갱신하고, 랭킹 데이터 정보 갱신
+	bro = Backend.URank.User.UpdateUserScore(RANK_UUID, "USER_DATA", rowInDate, param);
+	
+	if(bro.IsSuccess())
+	{
+	    Debug.Log("랭킹 등록에 성공했습니다.");
+	}
+	else
+	{
+	    Debug.LogError("랭킹 등록에 실패했습니다.");
+	}
+}
+```
+<br/>
+
+- 뒤끝 서버의 Json 데이터를 파싱해서 나의 랭킹 불러오기
+```C#
+public void GetMyRank()
+{
+    // 내 랭킹 정보 불러오기
+    BackendReturnObject bro = Backend.URank.User.GetMyRank(RANK_UUID);
+
+    if(bro.IsSuccess())
+    {
+        try
+        {
+            JsonData rankDataJson = bro.FlattenRows();
+
+            // 받아온 데이터의 개수가 0 -> 데이터가 없음
+            if (rankDataJson.Count <= 0)
+            {
+                Debug.Log("나의 랭킹 데이터가 존재하지 않습니다.");
+            }
+            else
+            {
+                _rankPoint = int.Parse(rankDataJson[0]["score"].ToString());
+                _rank = int.Parse(rankDataJson[0]["rank"].ToString());
+                _userName = rankDataJson[0]["nickname"].ToString();
+            }
+        }
+        // 나의 랭킹 정보 JSON 데이터 파싱에 실패했을 때
+        catch (System.Exception e)
+        {
+            Debug.LogError(e);
+        }
+    }
+    else
+    {
+        // 나의 랭킹 정보를 불러오는데 실패했을 때
+    }
+}
+```
+<br/>
+
+- 뒤끝 서버의 Json 데이터를 파싱해서 유저 랭킹 불러오기
+```C#
+private const int MAX_RANK_LIST = 10;
+
+public void GetRankList()
+{
+    // 랭킹 테이블에 있는 유저의 offset ~ offset + limit 순위 랭킹 정보를 불러옴
+    BackendReturnObject bro = Backend.URank.User.GetRankList(RANK_UUID, MAX_RANK_LIST, 0);
+
+    if(bro.IsSuccess())
+    {
+        // JSON 데이터 파싱 성공
+        try
+        {
+            Debug.Log("랭킹 조회에 성공했습니다.");
+            JsonData rankDataJson = bro.FlattenRows();
+
+            // 받아온 데이터의 개수가 0 -> 데이터가 없음
+            if(rankDataJson.Count <= 0)
+            {
+                Debug.Log("랭킹 데이터가 존재하지 않습니다.");
+            }
+            else
+            {
+                int rankCount = rankDataJson.Count;
+
+                // 받아온 rank 데이터의 숫자만큼 데이터 출력
+                for (int i = 0; i < rankCount; i++)
+                {
+                    _rankPoint = int.Parse(rankDataJson[i]["score"].ToString());
+                    _rank = int.Parse(rankDataJson[i]["rank"].ToString());
+                    _userName = rankDataJson[i]["nickname"].ToString();
+                }
+                // rankCount가 Max값만큼 존재하지 않을 때, 나머지 랭킹
+                for (int i = rankCount; i < MAX_RANK_LIST; i++)
+                {
+                    // 랭킹 데이터 비활성화
+                }
+            }
+        }
+        // JSON 데이터 파싱 실패
+        catch (System.Exception e)
+        {
+            Debug.LogError(e);
+        }
+    }
+    else
+    {
+        Debug.LogError("랭킹 조회에 실패했습니다.");
+    }
+}
+```
+<br/>
+
 ### 10. Enemy 상태 패턴 구현
 <img src="https://github.com/user-attachments/assets/ca915275-4091-425c-84de-1c4774e1dbed" width="50%"/>
 
