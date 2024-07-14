@@ -349,7 +349,7 @@ private Param GetUserDataParam()
 <br/>
 
 - 뒤끝 서버 랭킹 추가
-<img src="https://github.com/user-attachments/assets/116ba23b-1ea3-4fc6-8b37-2cdf6cdf5c61" width="50%"/>
+<img src="https://github.com/user-attachments/assets/eca92b5d-5868-4f2e-ba13-717a0060c88d" width="50%"/>
 <br/>
 <br/>
 
