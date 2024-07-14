@@ -119,7 +119,7 @@ public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
 - 멀티 게임 시작 전, 의사소통 목적
 
 #### 구현 방법
-- PhotonView.RPC 함수를 통해, 모든 Player가 동시에 함수 실행
+- RPC 함수를 통해, 모든 Player가 동시에 함수 실행
 ```C#
 private void SendChat()
 {
