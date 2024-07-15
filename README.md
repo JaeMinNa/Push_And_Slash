@@ -537,6 +537,7 @@ public void Init()
 	MobileAds.Initialize((InitializationStatus initStatus) => { });
 }
 
+//보상형 광고 로드, 사용 시 호출
 public void LoadRewardedAd()
 {
 	if (_rewardedAd != null)
@@ -589,7 +590,7 @@ private void RegisterEventHandlers(RewardedAd ad)
 	};
 }
 
-//광고 로드, 사용 시 호출
+//배너 광고 로드, 사용 시 호출
 public void LoadBannerAd()
 {
 	if (_bannerView == null)
@@ -601,7 +602,7 @@ public void LoadBannerAd()
 	_bannerView.LoadAd(adRequest);
 }
 
-//광고 보여주기
+//배너 광고 보여주기
 private void CreateBannerView()
 {
 	if (_bannerView != null)
@@ -612,7 +613,7 @@ private void CreateBannerView()
 	_bannerView = new BannerView(_adBannerUnitId, AdSize.Banner, AdPosition.Top);
 }
 
-//광고 제거
+//배너 광고 제거
 public void DestroyAd()
 {
 	if (_bannerView != null)
@@ -624,22 +625,27 @@ public void DestroyAd()
 ```
 <br/>
 
-### 10. Enemy 상태 패턴 구현
-<img src="https://github.com/user-attachments/assets/ca915275-4091-425c-84de-1c4774e1dbed" width="50%"/>
+### 7. Enemy 상태 패턴 구현
+<img src="https://github.com/user-attachments/assets/3b2e2a93-5a9b-42e1-9e36-638c8fd8ec4c" width="50%"/>
 
 #### 구현 이유
-- 다양한 상태를 가진 Player와 Enemy 움직임 구현
+- 다양한 상태를 가진 Enemy 움직임 구현
 - 끊임없이 독립적으로 행동해야 함
 - 유연한 상태 관리로 필요에 따라 상태를 추가하거나 수정이 가능해야 함
 
 #### 구현 방법
+<img src="https://github.com/user-attachments/assets/b85edb66-b5ad-4c2b-b50e-de1237b26c55" width="50%"/>
+<br/>
+<br/>
+
 - IState 인터페이스 : 구체적인 상태 클래스로 연결할 수 있도록 설정
 ```C#
 public interface IEnemyState
 {
     void Handle(EnemyController controller);
 }
-``` 
+```
+<br/>
 ​
 - Context 스크립트 : 클라이언트가 객체의 내부 상태를 변경할 수 있도록 요청하는 인터페이스를 정의
 ```C#
@@ -654,41 +660,60 @@ public void Transition(IEnemyState state)
     CurrentState.Handle(_enemyController);
 }
 ```
+<br/>
 ​
+- EnemyController 스크립트 : 각 State 컴포넌트 연결, State 실행
+```C#
+// Start문과 동일하게 사용
+private void Start()
+{
+	_enemyStateContext = new EnemyStateContext(this);
+	_walkState = gameObject.AddComponent<EnemyWalkState>();
+}
+
+public void WalkStart()
+{
+	_enemyStateContext.Transition(_walkState);
+}
+```
+<br/>
+
 - State 스크립트 : 각 State를 정의, State 변경 조건 설정
 ```C#
 // Start문과 동일하게 사용
 public void Handle(EnemyController enemyController)
 {
-    if (!_enemyController)
-        _enemyController = enemyController;
-
-    Debug.Log("Idle 상태 시작");   
-    _idleTime = 3f;
-    _time = 0;
-
-    StartCoroutine(COUpdate());
+	if (!_enemyController)
+	    _enemyController = enemyController;
+	
+	Debug.Log("Walk 상태 시작");
+	StartCoroutine(COUpdate());
 }
 
 // Update문과 동일하게 사용
-IEnumerator COUpdate()
+private IEnumerator COUpdate()
 {
-  while (true)
-  {
-  	// 각각의 상태 변환 조건 설정
-	if(_enemyController.Ishit)
-    	{
-		_enemyController.HitStart();
-		break;
-	}
-	if(_enemyController.IsAttack)
+	while (true)
 	{
+	    _dir = (_enemyController.Target.transform.position - transform.position).normalized;
+	    transform.position += _dir * _enemyController.Speed * Time.deltaTime;
+	
+	    if (_enemyController.CheckPlayer())
+	    {
 		_enemyController.AttackStart();
+		_enemyController.EnemyAnimator.SetBool("Attack", true);
 		break;
+	    }
+	
+	    if (_enemyController.IsHit_attack || _enemyController.IsHit_skill)
+	    {
+		_enemyController.HitStart();
+		_enemyController.EnemyAnimator.SetTrigger("Hit");
+		break;
+	    }
+		
+	    yield return null;
 	}
-    
-      yield return null;
-  }
 }
 ```
 <br/>
