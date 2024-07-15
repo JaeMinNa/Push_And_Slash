@@ -493,6 +493,137 @@ public void GetRankList()
 ```
 <br/>
 
+### 6. Admob 광고 구현
+<img src="https://github.com/user-attachments/assets/cee62c9f-3df8-4753-bbd6-969521b3afab" width="50%"/> 
+
+#### 구현 이유
+- 유저들이 광고를 시청하면 Coin을 얻게하기 위해
+- 유저들이 광고를 시청함으로써, 게임의 수익화를 실현하기 위해
+
+#### 구현 방법
+- Google Admob에서 보상형 광고와 배너 광고 생성
+<img src="https://github.com/user-attachments/assets/b98f1d69-bf1b-4164-8eab-1878be77beb0" width="50%"/>
+<br/>
+<br/>
+
+- Unity plugin을 설치 후, 프로젝트에 Import
+- 테스트 ID와 광고 ID를 적용해서 스크립트 작성
+
+```C#
+public void Init()
+{
+	if (IsTestMode)
+	{
+	    // 테스트용 ID
+	    _adRewardUnitId = "ca-app-pub-3940256099942544/5224354917";
+	    _adBannerUnitId = "ca-app-pub-3940256099942544/6300978111";
+	}
+	else
+	{
+	    #if UNITY_ANDROID
+	    // 광고 ID
+	    _adRewardUnitId = "";
+	    _adBannerUnitId = "";
+	    #elif UNITY_IPHONE
+	    // 테스트용 ID
+	    _adRewardUnitId = "ca-app-pub-3940256099942544/1712485313";
+	    _adBannerUnitId = "ca-app-pub-3940256099942544/2934735716";
+	    #else
+	    _adRewardUnitId = "unused";
+	    _adBannerUnitId = "unused";
+	    #endif
+	}
+
+	MobileAds.Initialize((InitializationStatus initStatus) => { });
+}
+
+public void LoadRewardedAd()
+{
+	if (_rewardedAd != null)
+	{
+	    _rewardedAd.Destroy();
+	    _rewardedAd = null;
+	}
+
+	var adRequest = new AdRequest();
+
+	RewardedAd.Load(_adUnitId, adRequest, (RewardedAd ad, LoadAdError error) =>
+	{
+		if (error != null || ad == null)
+		{
+		    Debug.LogError("Rewarded ad failed to load an ad " +
+				   "with error : " + error);
+		    return;
+		}
+
+		Debug.Log("Rewarded ad loaded with response : " + ad.GetResponseInfo());
+
+		_rewardedAd = ad;
+		RegisterEventHandlers(_rewardedAd);
+		ShowRewardedAd();
+	});
+}
+
+public void ShowRewardedAd()
+{
+	if (_rewardedAd != null && _rewardedAd.CanShowAd())
+	{
+	    _rewardedAd.Show((Reward reward) =>
+	    {
+		// 광고 보상 입력
+	    });
+	}
+}
+
+private void RegisterEventHandlers(RewardedAd ad)
+{
+	ad.OnAdPaid += (AdValue adValue) => { };
+	ad.OnAdImpressionRecorded += () => { };
+	ad.OnAdClicked += () => { };
+	ad.OnAdFullScreenContentOpened += () => { };
+	ad.OnAdFullScreenContentClosed += () => { }; // 광고 창을 닫을 때, 실행할 내용
+	// 광고 불러오기를 실패했을 때
+	ad.OnAdFullScreenContentFailed += (AdError error) =>
+	{
+	    LoadRewardedAd();
+	};
+}
+
+//광고 로드, 사용 시 호출
+public void LoadBannerAd()
+{
+	if (_bannerView == null)
+	{
+	    CreateBannerView();
+	}
+	
+	var adRequest = new AdRequest();
+	_bannerView.LoadAd(adRequest);
+}
+
+//광고 보여주기
+private void CreateBannerView()
+{
+	if (_bannerView != null)
+	{
+	    DestroyAd();
+	}
+	
+	_bannerView = new BannerView(_adBannerUnitId, AdSize.Banner, AdPosition.Top);
+}
+
+//광고 제거
+public void DestroyAd()
+{
+	if (_bannerView != null)
+	{
+	    _bannerView.Destroy();
+	    _bannerView = null;
+	}
+}
+```
+<br/>
+
 ### 10. Enemy 상태 패턴 구현
 <img src="https://github.com/user-attachments/assets/ca915275-4091-425c-84de-1c4774e1dbed" width="50%"/>
 
