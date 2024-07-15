@@ -718,6 +718,52 @@ private IEnumerator COUpdate()
 ```
 <br/>
 
+### 8. 로딩 씬 구현
+<img src="https://github.com/user-attachments/assets/a26ffcc9-fdc0-4628-ba8f-952d1d6d90ba" width="50%"/>  
+
+#### 구현 이유
+- 씬이 전환 될 때, 다음 씬에서 사용될 리소스들을 읽어와서 게임을 위한 준비 작업 필요
+- 로딩 화면이 없다면 가만히 멈춘 화면이나 까만 화면만 보일 수 있음
+- 씬이 전환 될 때, 지루한 대기 시간을 지루하지 않게 하기 위해
+
+#### 구현 방법
+- 씬을 불러오는 도중에 다른 작업이 가능 비동기 방식 씬 전환 구현
+```C#
+IEnumerator LoadScene()
+{
+    yield return null;
+    AsyncOperation op = SceneManager.LoadSceneAsync(NextScene);
+    op.allowSceneActivation = false;
+    float timer = 0.0f;
+    while (!op.isDone)
+    {
+        yield return null;
+        timer += Time.deltaTime;
+        if (op.progress < 0.9f)
+        {
+            _loadingBar.value = Mathf.Lerp(_loadingBar.value, op.progress, timer);
+            if (_loadingBar.value >= op.progress)
+            {
+                timer = 0f;
+            }
+        }
+        else
+        {
+            _loadingBar.value = Mathf.Lerp(_loadingBar.value, 1f, timer);
+            if (_loadingBar.value == 1.0f)
+            {
+                op.allowSceneActivation = true;
+                yield break;
+            }
+        }
+    }
+}
+```
+
+- 리소스 로딩이 끝나기 전에 씬 로딩 되는 것을 막기 위해 allowSceneActivation을 false로 설정
+- allowSceneActivation을 false로 90% 로드 한 상태로 대기하고, true 변경 시, 남은 부분을 로드하고 씬 이동
+<br/>
+
 ### 2. 롱클릭 구현
 <img src="https://github.com/JaeMinNa/CastleDefence2D/assets/149379194/c8ad82a6-fc10-4605-ab7f-51881792969d" width="50%"/>
 
