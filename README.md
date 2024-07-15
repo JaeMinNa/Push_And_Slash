@@ -718,7 +718,7 @@ private IEnumerator COUpdate()
 ```
 <br/>
 
-### 8. 로딩 씬 구현
+### 8. 비동기 방식 로딩 씬 구현
 <img src="https://github.com/user-attachments/assets/a26ffcc9-fdc0-4628-ba8f-952d1d6d90ba" width="50%"/>  
 
 #### 구현 이유
