@@ -1015,7 +1015,7 @@ Distance = (Target.transform.position - transform.position).magnitude;
  - 초기 기획대로 멀티 PVP 구현 완료
  - 최대한 유료 에셋을 사용하여 게임 퀄리티 상승
  - 서버를 이용해서 랭킹을 구현하여 유저들의 흥미를 높임
- - 실제 타 모바일 게임과 유사한 퀄리티로 제작
+ - 실제 런칭중인 모바일 게임과 유사한 퀄리티로 제작
  - Admob 배너 광고 적용 완료
 <br/>
 
@@ -1026,7 +1026,7 @@ Distance = (Target.transform.position - transform.position).magnitude;
 - 출시 후, 홍보 및 광고의 한계
 - 목표 기간에 맞추지 못함
 - 최적화를 제대로하지 못함
-- 무료 서버 사용으로 약간의 끊김과 딜레이 발생
+- PVP 플레이 시, 약간의 끊김과 딜레이 발생
 <br/>
 
 ### 소감
