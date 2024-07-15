@@ -848,7 +848,7 @@ private void Awake()
 - 점프 시, Position Y 값을 제대로 동기화하지 못하는 현상 해결
 <br/>
 
-### 3. 랭킹 구현을 위한 서버
+### 3. 랭킹 구현을 위한 서버 선택
 #### 문제 상황
 - 랭킹 시스템에 사용할 서버 필요
 
@@ -867,9 +867,75 @@ private void Awake()
  
 #### 의견 결정
 ##### 뒤끝 서버 사용
-- 
+<img src="https://github.com/user-attachments/assets/cd2b2bc5-b430-4ebd-8731-a8660d90513c" width="50%"/>
+<br/>
 <br/>
 
+- 이미 데이터를 비교해서 순위를 결정하는 랭킹 시스템이 구현되어 있기 때문에 사용 방법만 익히면 됨
+- 멀티 구현이 미숙하기 때문에 참고 가능한 자료, 정보가 많은 뒤끝 서버로 구현하는 것이 좋다고 판단
+- 랭킹 시스템만 구현하고 사용하는 유저가 적기 때문에 무료 버전의 사용량으로도 충분하다고 판단
+<br/>
+
+### 4. List 데이터 수정 시, 원본 데이터도 수정
+#### 문제 상황
+```C#
+public class CharacterData
+{
+    public string Tag;
+    public bool IsEquip;
+    public int Level;
+    public float Speed;
+    public float Atk;
+    public float Def;
+}
+
+public List<CharacterData> CharacterInventory;
+public CharacterData[] CharacterDatas;
+
+if (!CharacterIsGet(_data)) 
+{
+	GameManager.I.DataManager.DataWrapper.CharacterInventory.Add(_data);
+}
+```
+<br/>
+
+- CharacterData의 초기 데이터를 CharacterDatas 배열에서 관리
+- 캐릭터를 얻게 되면 해당 CharacterData를 CharacterInventory List에 추가
+- CharacterInventory List의 데이터가 수정되면, CharacterDatas 배열의 데이터도 함께 변경됨
+- CharacterData가 class이기 때문에 Heap 영역에 할당되고, 참조 형식이기 때문에 원본 데이터도 함께 변경
+
+#### 해결 방안
+##### struct 사용
+- struct는 stack 영역에 할당되고, 값 형식이기 때문에 근본적인 해결 가능
+- 현재 구현한 데이터 저장 방식이 class 형식만 저장 가능하기 때문에 데이터 저장 방식 변경 필요
+##### 별도의 인벤토리 List를 사용하지 않기
+- List를 사용하지 않고 각각 데이터마다 IsGet이라는 bool 값을 설정
+- 매번 CharacterDatas 배열 전체를 순회하여 캐릭터를 가지고 있는지 판단하기 때문에 비효율적이라고 판단
+##### class를 참조하지 않고 값 형식 복사
+- class를 값 형식으로 복사하는 깊은 복사 구현
+- 객체의 내부까지 모두 복사하는 복잡한 깊은 복사를 굳이 구현하는 것은 비효율적이라고 판단
+##### class에 수정하지 않을 원본 값을 추가
+- class에 별도의 원본 데이터를 추가
+ 
+#### 의견 결정
+##### class에 수정하지 않을 원본 값을 추가
+- 변경하지 않을 별도의 원본 데이터를 추가
+- 근본적인 해결 방법은 아니지만, 가장 합리적인 해결 방법이라고 판단
+```C#
+public class CharacterData
+{
+    public string Tag;
+    public bool IsEquip;
+    public int Level;
+    public float Speed;
+    public float Atk;
+    public float Def;
+    public float OriginSpeed;
+    public float OriginAtk;
+    public float OriginDef;
+}
+```
+<br/>
 
 ### 2. ObjectPool 사용 시, OnEnable문으로 오브젝트 초기화
 <img src="https://github.com/JaeMinNa/CastleDefence2D/assets/149379194/12ec91d2-b3d9-485b-aa63-565721640b80" width="50%"/>
