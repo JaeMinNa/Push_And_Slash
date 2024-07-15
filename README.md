@@ -640,8 +640,7 @@ public interface IEnemyState
 {
     void Handle(EnemyController controller);
 }
-```
-<br/>
+``` 
 ​
 - Context 스크립트 : 클라이언트가 객체의 내부 상태를 변경할 수 있도록 요청하는 인터페이스를 정의
 ```C#
@@ -656,8 +655,6 @@ public void Transition(IEnemyState state)
     CurrentState.Handle(_enemyController);
 }
 ```
-<br/>
-<br/>
 ​
 - EnemyController 스크립트 : 각 State 컴포넌트 연결, State 실행
 ```C#
