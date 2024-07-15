@@ -849,6 +849,11 @@ private void Awake()
 <br/>
 
 ### 3. 랭킹 구현을 위한 서버 선택
+##### 뒤끝 서버 사용
+<img src="https://github.com/user-attachments/assets/cd2b2bc5-b430-4ebd-8731-a8660d90513c" width="50%"/>
+<br/>
+<br/>
+
 #### 문제 상황
 - 랭킹 시스템에 사용할 서버 필요
 
@@ -866,11 +871,6 @@ private void Awake()
 - 서버를 직접 개발하기에는 많은 시간과 노력이 필요
  
 #### 의견 결정
-##### 뒤끝 서버 사용
-<img src="https://github.com/user-attachments/assets/cd2b2bc5-b430-4ebd-8731-a8660d90513c" width="50%"/>
-<br/>
-<br/>
-
 - 이미 데이터를 비교해서 순위를 결정하는 랭킹 시스템이 구현되어 있기 때문에 사용 방법만 익히면 됨
 - 멀티 구현이 미숙하기 때문에 참고 가능한 자료, 정보가 많은 뒤끝 서버로 구현하는 것이 좋다고 판단
 - 랭킹 시스템만 구현하고 사용하는 유저가 적기 때문에 무료 버전의 사용량으로도 충분하다고 판단
