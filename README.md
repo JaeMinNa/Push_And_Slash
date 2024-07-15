@@ -634,10 +634,6 @@ public void DestroyAd()
 - 유연한 상태 관리로 필요에 따라 상태를 추가하거나 수정이 가능해야 함
 
 #### 구현 방법
-<img src="https://github.com/user-attachments/assets/b85edb66-b5ad-4c2b-b50e-de1237b26c55" width="50%"/>
-<br/>
-<br/>
-
 - IState 인터페이스 : 구체적인 상태 클래스로 연결할 수 있도록 설정
 ```C#
 public interface IEnemyState
@@ -679,6 +675,10 @@ public void WalkStart()
 <br/>
 
 - State 스크립트 : 각 State를 정의, State 변경 조건 설정
+<img src="https://github.com/user-attachments/assets/b85edb66-b5ad-4c2b-b50e-de1237b26c55" width="50%"/>
+<br/>
+<br/>
+
 ```C#
 // Start문과 동일하게 사용
 public void Handle(EnemyController enemyController)
