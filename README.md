@@ -805,12 +805,31 @@ IEnumerator LoadScene()
 <br/>
 
 - 간단하고 직관적으로 Position, Rotation 동기화 가능
-- 끊김 현상이 심하게 발생
+- 끊김 현상, 딜레이가 심하게 발생
 - 점프 시, Position Y 값을 제대로 동기화하지 못함
 - 유니티 3D의 빠른 움직임을 동기화 할때는 적합하지 않음
 
 #### OnPhotonSerializeView 함수를 통해 Transform 데이터 실시간 송수신
 - 실시간으로 전달된 데이터를 통해 각각 클라이언트에서 직접 움직임을 실행
+```C#
+public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+{
+    // 데이터 보내기 (isMine == true)
+    if (stream.IsWriting)
+    {
+        stream.SendNext(transform.position);
+        stream.SendNext(transform.rotation);
+    }
+    // 데이터 받기 (isMine == false)
+    else
+    {
+        _playerPosition = (Vector3)stream.ReceiveNext();
+        _playerRotation = (Quaternion)stream.ReceiveNext();
+    }
+}
+```
+<br/>
+
 - OnPhotonSerializeView 호출 빈도를 직접 설정
 ```C#
 private void Awake()
@@ -818,9 +837,10 @@ private void Awake()
     PhotonNetwork.SendRate = 60;
 }
 ```
+<br/>
 
 #### 결과
-- 끊김 현상 개선
+- 끊김 현상, 딜레이 개선
 <img src="https://github.com/user-attachments/assets/c0625e71-1016-48cc-8893-512b0c9db764" width="50%"/>
 <br/>
 <br/>
