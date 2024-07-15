@@ -840,11 +840,11 @@ private void Awake()
 <br/>
 
 #### 결과
-- 끊김 현상, 딜레이 개선
 <img src="https://github.com/user-attachments/assets/c0625e71-1016-48cc-8893-512b0c9db764" width="50%"/>
 <br/>
 <br/>
 
+- 끊김 현상, 딜레이 개선
 - 점프 시, Position Y 값을 제대로 동기화하지 못하는 현상 해결
 <br/>
 
