@@ -937,79 +937,13 @@ public class CharacterData
 ```
 <br/>
 
-### 2. ObjectPool 사용 시, OnEnable문으로 오브젝트 초기화
-<img src="https://github.com/JaeMinNa/CastleDefence2D/assets/149379194/12ec91d2-b3d9-485b-aa63-565721640b80" width="50%"/>
-
-#### Start문 사용
-- ObjectPool로 재사용할 때, 정상적으로 동작하지 않음
-- Start문의 내용이 재실행되지 않음
-- 오브젝트 활성화 될 때 마다, 초기화 해야함
- 
-```C#
-private void Start()
-{
-	_enemyStateContext = new EnemyStateContext(this);
-	
-	_walkState = gameObject.AddComponent<EnemyWalkState>();
-	_hitState = gameObject.AddComponent<EnemyHitState>();
-	_attackState = gameObject.AddComponent<EnemyAttackState>();
-	Animator = gameObject.transform.GetChild(0).GetComponent<Animator>();
-	Rigdbody = GetComponent<Rigidbody2D>();
-	
-	Hp = EnemyData.Hp;
-	Ishit = false;
-	IsAttack = false;
-	
-	_enemyStateContext.Transition(_walkState);
-}
-```
-
-#### OnEnable문 사용
-- 오브젝트 활성화 시, Start문 내용은 실행되지 않고, 최초 1회만 실행
-- OnEnable문 -> Start문 순으로 실행
-
-```C#
-private void Start()
-{
-	_enemyStateContext = new EnemyStateContext(this);
-	
-	_walkState = gameObject.AddComponent<EnemyWalkState>();
-	_hitState = gameObject.AddComponent<EnemyHitState>();
-	_attackState = gameObject.AddComponent<EnemyAttackState>();
-	Animator = gameObject.transform.GetChild(0).GetComponent<Animator>();
-	Rigdbody = GetComponent<Rigidbody2D>();
-	
-	Hp = EnemyData.Hp;
-	Ishit = false;
-	IsAttack = false;
-	
-	_enemyStateContext.Transition(_walkState);
-}
-
-private void OnEnable()
-{
-	if(_enemyStateContext != null)
-	{
-	    Hp = EnemyData.Hp;
-	    _enemyStateContext.Transition(_walkState);
-	}
-}
-```
-
-#### 결과
-- ObjectPool로 프리팹의 재사용 시, 오브젝트가 활성화 될 때마다 코드를 실행 가능
-<img src="https://github.com/JaeMinNa/CastleDefence2D/assets/149379194/f676082d-c675-4104-98fb-fbc3d7bd8715" width="50%"/> 
+### 5. 상태 패턴을 이용한 Enemy 구현
+<img src="https://github.com/user-attachments/assets/6a1b9b91-f1d2-46c2-b2b7-12ef1f311f80" width="50%"/>
 <br/>
 <br/>
-
-### 3. 상태 패턴을 이용한 Enemy와 Player 구현
-<p align="center">
-  <img src="https://github.com/JaeMinNa/CastleDefence2D/assets/149379194/c6f239cc-d98a-4c89-ba16-bc3895f15e25" width="49%"/>
-  <img src="https://github.com/JaeMinNa/CastleDefence2D/assets/149379194/defa1871-065a-41ab-8ef7-40c0c030f808" width="49%"/>
-</p>
 
 #### 문제 상황
-- 적과 동료의 독립적인 움직임을 구현하기 위한 방법이 필요
+- 적의 독립적인 움직임을 구현하기 위한 방법이 필요
 
 #### 해결 방안
 ##### 조건문과 스위치문 사용
@@ -1025,87 +959,54 @@ private void OnEnable()
 - 특정 행동을 추가해도 유지 관리가 용이
 <br/>
 
-### 4. Physics2D.OverlapCircleAll를 이용한 Targetting 구현
-<img src="https://github.com/JaeMinNa/CastleDefence2D/assets/149379194/58f3acf1-ea78-4e77-9a3f-1259477a4fab" width="50%"/>
+### 6. Enemy의 Player 인식 방법
+<img src="https://github.com/user-attachments/assets/ed55961a-99b7-4192-a008-ba255791fff5" width="50%"/>
+<br/>
+<br/>
 
 #### 문제 상황
-- Player의 Skill 사용 시, 데미지 적용을 위한 적 Targetting 방법이 필요
+- 적의 Walk State에서 Attack State로 전환하기 위한 Player 인식 방법이 필요
 
 #### 해결 방안
-##### BoxCollider로 IsTrigger 범위 설정
-- 간단하게 구현 가능
-##### Physics2D.OverlapCircleAll를 사용
-<p align="center">
-<img src="https://github.com/JaeMinNa/CastleDefence2D/assets/149379194/cd7d06f1-4216-4029-9536-417654b3d5be" width="49%"/>
-<img src="https://github.com/JaeMinNa/CastleDefence2D/assets/149379194/e32cf54c-c21c-408f-9485-7dbeb673d876" width="49%"/>
-</p>
-
-- 특정 범위 내의 적이나 동료 판별 가능
-
+##### Physics.Raycast 사용
+- 적의 정면으로 Ray를 쏴서 Player 인식 가능
+- 직관적이고 간단한 방법
+- 원거리 적의 경우 Ray의 길이만 길게 하면 됨
 ```C#
-private void Targetting()
+public bool CheckPlayer()
 {
-int layerMask = (1 << _layerMask);  // Layer 설정
-_targets = Physics2D.OverlapCircleAll(transform.position, 3f, layerMask);
+    Debug.DrawRay(transform.position + new Vector3(0, 0.7f, 0), transform.forward, Color.green, 1.5f);
 
-// 데미지 적용
+    if (Physics.Raycast(transform.position + new Vector3(0, 0.7f, 0), transform.forward, out hit, 1.5f))
+    { 
+        if (hit.transform.CompareTag("Player"))
+        {
+            return true;
+        }
+    }
 
+    return false;
 }
 ```
- 
-#### 의견 결정
-##### Physics2D.OverlapCircleAll로 구현
-- BoxCollider 사용 시, 다른 Collider나 Raycast와 충돌할 위험이 있음
-- Skill이 적과 충돌할 때, 순간적으로 적들을 인식 가능
 <br/>
 
-### 5. 적과 적의 충돌
-<img src="https://github.com/JaeMinNa/CastleDefence2D/assets/149379194/799db977-9173-4d6b-bd4c-66529a7912cd" width="50%"/>
-
-#### 문제 상황
-- 적과 적이 충돌하지 않는 방법 필요
-
-#### 해결 방안
-##### Layer Collision Matrix 설정
-- Project Settings - Physics2D 에서 간단하게 설정 가능
-<img src="https://github.com/JaeMinNa/CastleDefence2D/assets/149379194/fe62ae49-be60-4425-b099-1541ffd523ee" width="50%"/>
-
-##### Collider의 IsTrigger 사용
-- 간단하게 설정가능
-- 하지만 땅을 통과하기 때문에 추가 Collider가 필요
-
-#### 의견 결정
-##### Layer Collision Matrix 설정
-- 적에게 추가 Collider를 생성하면 적을 두 번 인식할 수도 있음
-- 유니티 자체 기능으로 간편하게 설정 가능
+##### Player와의 거리로 판별
+- 정확한 거리로 판별 가능
+- magnitude 함수로 매 프레임 Player와 거리를 판별해야 함
+```C#
+Distance = (Target.transform.position - transform.position).magnitude;
+```
 <br/>
 
-### 6. 데이터 저장 방법
-
-#### 문제 상황
-- 기존의 ScriptableObject로 저장된 데이터는 유니티 에디터에서만 저장
-- 빌드 후, ScriptableObject로 데이터를 저장할 수 없기 때문에 다른 데이터를 저장할 방법 필요
-
-#### 해결 방안
-##### EasySave 에셋 사용
-- 유니티 에셋스토어의 검증된 에셋으로, 간편하고 기능이 많음
-- 유료로 다운 받을 수 있음
-
-##### Json 사용
-- 텍스트 기반의 데이터 형식
-- 유니티에서 JSON Utility 클래스를 사용해서 오브젝트 데이터를 쉽게 다룰 수 있음
-- 데이터를 저장하거나 교환하는데 자주 사용되는 경량의 데이터 교환 형식
-- 키-값 쌍으로 이루어진 데이터 객체와 배열을 포함
-
-##### PlayerPrefs 사용
-- 가장 간단하게 저장할 수 있는 유니티 자체 기능
-- GameObject 데이터 저장하기는 어려움
-
+##### Collider로 판별
+- 범위를 나타내는 추가 Collider 생성
+<br/>
+  
 #### 의견 결정
-##### Json 사용
-- 에셋을 구매하는 것보다, 직접 기능을 구현하고 싶었음
-- PlayerPrefs의 데이터 저장으로 인벤토리의 Skill을 저장하는 것이 어렵다고 판단
-- 구현 난이도가 비교적 쉬움
+##### Physics.Raycast 사용
+- 가장 일반적인 방법으로 쉽게 사용 가능
+- magnitude 함수를 매 프레임 실행하면 성능 저하의 원인이 됨
+- Collider를 생성하면 Player의 공격에 Enemy가 인식되기 때문에 추가 설정이 필요
 <br/>
 
 ## 📋 프로젝트 회고
