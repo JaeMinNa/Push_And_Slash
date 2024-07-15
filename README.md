@@ -794,7 +794,7 @@ IEnumerator LoadScene()
 - 클라이언트 개발자로서 서버를 직접 개발할 필요성을 느끼지 못함
 <br/>
 
-### 2. OnPhotonSerializeView 동기화를 이용한 딜레이 현상 개선
+### 2. OnPhotonSerializeView 동기화를 이용한 끊김 현상 개선
 <img src="https://github.com/user-attachments/assets/f8dedc98-a67c-41a0-892b-8849f21cc587" width="50%"/>
 <br/>
 <br/>
