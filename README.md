@@ -766,7 +766,7 @@ IEnumerator LoadScene()
 
 ## 💥 트러블 슈팅
 
-### 1. PVP 구현
+### 1. Photon PUN2를 이용한 PVP 구현
 #### 문제 상황
 - 다른 클라이언트와 연동 가능한 서버가 필요
 
@@ -794,7 +794,7 @@ IEnumerator LoadScene()
 - 클라이언트 개발자로서 서버를 직접 개발할 필요성을 느끼지 못함
 <br/>
 
-### 2. PUN2 Transform 동기화
+### 2. OnPhotonSerializeView 동기화를 이용한 딜레이 현상 개선
 <img src="https://github.com/user-attachments/assets/f8dedc98-a67c-41a0-892b-8849f21cc587" width="50%"/>
 <br/>
 <br/>
@@ -848,7 +848,7 @@ private void Awake()
 - 점프 시, Position Y 값을 제대로 동기화하지 못하는 현상 해결
 <br/>
 
-### 3. 랭킹 구현을 위한 서버 선택
+### 3. 뒤끝 서버를 이용한 랭킹 구현
 <img src="https://github.com/user-attachments/assets/cd2b2bc5-b430-4ebd-8731-a8660d90513c" width="50%"/>
 <br/>
 <br/>
@@ -937,7 +937,7 @@ public class CharacterData
 ```
 <br/>
 
-### 5. Enemy 구현
+### 5. 상태 패턴을 사용한 Enemy 구현
 <img src="https://github.com/user-attachments/assets/6a1b9b91-f1d2-46c2-b2b7-12ef1f311f80" width="50%"/>
 <br/>
 <br/>
@@ -959,7 +959,7 @@ public class CharacterData
 - 특정 행동을 추가해도 유지 관리가 용이
 <br/>
 
-### 6. Enemy의 Player 인식 방법
+### 6. Physics.Raycast 이용한 Enemy의 Player 인식
 <img src="https://github.com/user-attachments/assets/ed55961a-99b7-4192-a008-ba255791fff5" width="50%"/>
 <br/>
 <br/>
