@@ -809,7 +809,7 @@ IEnumerator LoadScene()
 - 점프 시, Position Y 값을 제대로 동기화하지 못함
 - 유니티 3D의 빠른 움직임을 동기화 할때는 적합하지 않음
 
-#### OnPhotonSerializeView 함수를 통해 Transform 데이터 실시간 송수신
+#### OnPhotonSerializeView 함수를 통해 Transform 데이터 실시간 송수신으로 개선
 - 실시간으로 전달된 데이터를 통해 각각 클라이언트에서 직접 움직임을 실행
 ```C#
 public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
