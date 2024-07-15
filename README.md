@@ -657,9 +657,11 @@ public void Transition(IEnemyState state)
 }
 ```
 <br/>
+<br/>
 ​
 - EnemyController 스크립트 : 각 State 컴포넌트 연결, State 실행
 ```C#
+
 // Start문과 동일하게 사용
 private void Start()
 {
@@ -672,6 +674,8 @@ public void WalkStart()
 	_enemyStateContext.Transition(_walkState);
 }
 ```
+<br/>
+<br/>
 
 - State 스크립트 : 각 State를 정의, State 변경 조건 설정
 <img src="https://github.com/user-attachments/assets/b85edb66-b5ad-4c2b-b50e-de1237b26c55" width="50%"/>
