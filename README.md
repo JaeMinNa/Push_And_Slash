@@ -766,63 +766,66 @@ IEnumerator LoadScene()
 
 ## 💥 트러블 슈팅
 
-### 1. ObjectPool을 이용한 최적화
+### 1. PVP 구현
+#### 문제 상황
+- 다른 클라이언트와 연동 가능한 서버가 필요
 
-#### 프리팹 생성, 파괴로 구현
-- 간단하고 직관적으로 구현 가능
-- 반복적인 프리팹 생성, 삭제로 성능 저하 초래
-- 적절한 메모리 관리 방법 필요
+#### 해결 방안
+##### Photon PUN2 사용
+- 참고할 자료 및 내용이 많이 공유되어 있음
+- 많은 개발자들이 대표적으로 가장 많이 사용
+- 무료 버전으로도 비교적 많은 인원을 수용할 수 있음
+- Shared 네트워크 구조 방식만 제공
+##### Photon Fusion2 사용
+- 많은 인원을 수용할 수 있음
+- 직관적이고 간단하게 변수 동기화 가능
+- 여러가지 네트워크 구조 방식 제공하고 네트워크 지연 보간 기능 제공
+- 기능과 성능이 우수함
+- 비교적 어려운 사용 방법
+##### 서버 직접 개발
+- 직접 게임 특성에 맞게 서버를 개발 가능
+- 서버를 직접 개발하기에는 많은 시간과 노력이 필요
+ 
+#### 의견 결정
+##### Photon PUN2 사용
+- 1:1 PVP 게임이므로, 많은 인원을 수용할 필요 없음
+- 멀티 게임 개발 경험이 없기 때문에 많은 참고할 자료 및 내용이 필요
+- 무료 버전으로도 충분히 기획한 게임 구현 가능
+- 클라이언트 개발자로서 서버를 직접 개발할 필요성을 느끼지 못함
+<br/>
+
+### 2. PUN2 Transform 동기화
+<img src="https://github.com/user-attachments/assets/f8dedc98-a67c-41a0-892b-8849f21cc587" width="50%"/>
+<br/>
+<br/>
+
+#### PhotonTransformView 컴포넌트로 동기화
+<img src="https://github.com/user-attachments/assets/ec1c8a19-9eda-4746-bbc6-4e96269e4043" width="50%"/>
+<br/>
+<br/>
+
+- 간단하고 직관적으로 Position, Rotation 동기화 가능
+- 끊김 현상이 심하게 발생
+- 점프 시, Position Y 값을 제대로 동기화하지 못함
+- 유니티 3D의 빠른 움직임을 동기화 할때는 적합하지 않음
+
+#### OnPhotonSerializeView 함수를 통해 Transform 데이터 실시간 송수신
+- 실시간으로 전달된 데이터를 통해 각각 클라이언트에서 직접 움직임을 실행
+- OnPhotonSerializeView 호출 빈도를 직접 설정
 ```C#
-IEnumerator COShootAreaSkill(SkillData areaSkillData)
+private void Awake()
 {
-	int count = 0;
-	while (true)
-	{
-		count++;
-		Instantiate(_skillPrefab, transform.position, Quaternion.identity);
-		
-		if (count == 10) break;
-		yield return new WaitForSeconds(0.3f);
-	}
-}
-```
-
-#### ObjectPool로 개선
-- 프리팹 생성, 파괴를 하지 않음
-- 객체를 미리 생성해서 재사용 → 메모리 최적화 가능
-
-##### ObjectPoolManager
-```C#
-public void ActivePrefab(string poolName, Vector3 startPosition)
-{
-	_prefab = ObjectPool.SpawnFromPool(poolName);
-	_prefab.transform.position = startPosition;
-	_prefab.SetActive(true);
-}
-```
-
-##### ObjectPool
-```C#
-public GameObject SpawnFromPool(string tag)
-{
-	if (!PoolDictionary.ContainsKey(tag))
-	    return null;
-	
-	GameObject obj = PoolDictionary[tag].Dequeue();
-	PoolDictionary[tag].Enqueue(obj);
-	
-	return obj;
+    PhotonNetwork.SendRate = 60;
 }
 ```
 
 #### 결과
-- 초당 프레임 개선 (175 FPS → 190 FPS)
-<p align="center">
-  <img src="https://github.com/JaeMinNa/CastleDefence2D/assets/149379194/8b98b7a0-3c0e-44e7-8e1e-4938261f9303" width="49%"/>
-  <img src="https://github.com/JaeMinNa/CastleDefence2D/assets/149379194/5cdbe562-bf27-483d-a7e6-454fa790ea5c" width="49%"/>
-</p>
+- 끊김 현상 개선
+<img src="https://github.com/user-attachments/assets/c0625e71-1016-48cc-8893-512b0c9db764" width="50%"/>
+<br/>
+<br/>
 
-- 프리팹의 생성, 파괴 대신 모두 ObjectPool을 적용해서 최적화 완료
+- 점프 시, Position Y 값을 제대로 동기화하지 못하는 현상 해결
 <br/>
 
 
