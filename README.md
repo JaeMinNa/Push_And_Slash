@@ -937,7 +937,7 @@ public class CharacterData
 ```
 <br/>
 
-### 5. 상태 패턴을 이용한 Enemy 구현
+### 5. Enemy 구현
 <img src="https://github.com/user-attachments/assets/6a1b9b91-f1d2-46c2-b2b7-12ef1f311f80" width="50%"/>
 <br/>
 <br/>
