@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
@@ -25,7 +24,6 @@ public class EnemyController : MonoBehaviour
     public EnemyType Type;
     [HideInInspector] public GameObject Target;
     [HideInInspector] public EnemyData EnemyData;
-    //[HideInInspector] public NavMeshAgent NavMeshAgent;
     [HideInInspector] public Animator EnemyAnimator;
     [HideInInspector] public Rigidbody Rigidbody;
     [HideInInspector] public RaycastHit ForwardHit;
@@ -47,7 +45,6 @@ public class EnemyController : MonoBehaviour
 
     private void Awake()
     {
-        //NavMeshAgent = GetComponent<NavMeshAgent>();
         EnemyAnimator = transform.GetChild(0).GetComponent<Animator>();
         Rigidbody = GetComponent<Rigidbody>();
         StageController = GameObject.FindWithTag("StageController").GetComponent<StageController>();

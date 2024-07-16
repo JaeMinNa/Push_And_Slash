@@ -47,7 +47,6 @@ namespace ECM2.Examples.ThirdPerson
         protected float _followDistanceSmoothVelocity;
 
         private PlayerCharacter _playerCharacter;
-        private Rigidbody _rigidbody;
         private VariableJoystick _joystick;
   
         public float _dashSpeed;
@@ -121,7 +120,6 @@ namespace ECM2.Examples.ThirdPerson
         protected virtual void Awake()
         {
             _playerCharacter = GetComponent<PlayerCharacter>();
-            _rigidbody = GetComponent<Rigidbody>();
             _joystick = GameObject.FindWithTag("Joystick").GetComponent<VariableJoystick>();
             _photonView = GetComponent<PhotonView>();
         }
@@ -136,8 +134,6 @@ namespace ECM2.Examples.ThirdPerson
             //_cameraYaw = euler.y;
 
             _currentFollowDistance = followDistance;
-            //_isDashMode = false;
-            //_originPlayerSpeed = _playerCharacter.maxWalkSpeed;
         }
 
         protected virtual void Update()
@@ -218,13 +214,5 @@ namespace ECM2.Examples.ThirdPerson
         {
             UpdateCamera();
         }
-
-        //public void Dash()
-        //{
-        //    _playerDir = transform.TransformDirection(Vector3.forward);
-        //    _playerCharacter.maxWalkSpeed = _dashSpeed;
-        //    _isDashMode = true;
-        //    _time = 0f;
-        //}
     }
 }
