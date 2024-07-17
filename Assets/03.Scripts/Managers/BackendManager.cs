@@ -43,8 +43,9 @@ public class BackendManager : MonoBehaviour
         if (bro.IsSuccess())
         {
             Debug.Log("회원가입에 성공했습니다.");
-            InsertData();
+            bro = Backend.BMember.UpdateNickname("-");
             GameManager.I.DataManager.GameData.UserName = GameManager.I.DataManager.GameData.LoginID;
+            InsertData();
             Save();
         }
         else

@@ -411,13 +411,13 @@ public class LobbyController : MonoBehaviour
         }
         else if (_charactetSelectNum == 1)
         {
-            GameManager.I.DataManager.DataWrapper.CharacterInventory.Add(_dataWrapper.CharacterDatas[3]);
+            GameManager.I.DataManager.DataWrapper.CharacterInventory.Add(_dataWrapper.CharacterDatas[9]);
             GameManager.I.DataManager.DataWrapper.CharacterInventory[0].IsEquip = true;
             GameManager.I.DataManager.PlayerData = _inventory[0];
         }
         else if (_charactetSelectNum == 2)
         {
-            GameManager.I.DataManager.DataWrapper.CharacterInventory.Add(_dataWrapper.CharacterDatas[1]);
+            GameManager.I.DataManager.DataWrapper.CharacterInventory.Add(_dataWrapper.CharacterDatas[6]);
             GameManager.I.DataManager.DataWrapper.CharacterInventory[0].IsEquip = true;
             GameManager.I.DataManager.PlayerData = _inventory[0];
         }
@@ -430,16 +430,15 @@ public class LobbyController : MonoBehaviour
     private void CharacterSelectActive()
     {
         PlayerPrefs.SetInt("Tutorial", -1);
-        //GameManager.I.DataManager.GameData.UserName = GameManager.I.DataManager.GameData.LoginID;
         _character1AtkText.text = _dataWrapper.CharacterDatas[0].OriginAtk.ToString();
         _character1DefText.text = _dataWrapper.CharacterDatas[0].OriginDef.ToString();
         _character1SpeedText.text = _dataWrapper.CharacterDatas[0].OriginSpeed.ToString();
-        _character2AtkText.text = _dataWrapper.CharacterDatas[3].OriginAtk.ToString();
-        _character2DefText.text = _dataWrapper.CharacterDatas[3].OriginDef.ToString();
-        _character2SpeedText.text = _dataWrapper.CharacterDatas[3].OriginSpeed.ToString();
-        _character3AtkText.text = _dataWrapper.CharacterDatas[1].OriginAtk.ToString();
-        _character3DefText.text = _dataWrapper.CharacterDatas[1].OriginDef.ToString();
-        _character3SpeedText.text = _dataWrapper.CharacterDatas[1].OriginSpeed.ToString();
+        _character2AtkText.text = _dataWrapper.CharacterDatas[9].OriginAtk.ToString();
+        _character2DefText.text = _dataWrapper.CharacterDatas[9].OriginDef.ToString();
+        _character2SpeedText.text = _dataWrapper.CharacterDatas[9].OriginSpeed.ToString();
+        _character3AtkText.text = _dataWrapper.CharacterDatas[6].OriginAtk.ToString();
+        _character3DefText.text = _dataWrapper.CharacterDatas[6].OriginDef.ToString();
+        _character3SpeedText.text = _dataWrapper.CharacterDatas[6].OriginSpeed.ToString();
         _characterSelectPanel.SetActive(true);
         GameManager.I.UIManager.UserNameSettingActive();
     }

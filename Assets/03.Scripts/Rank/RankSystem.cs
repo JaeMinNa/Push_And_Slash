@@ -26,7 +26,6 @@ public class RankSystem : MonoBehaviour
     private TMP_Text _userNameText;
     private TMP_Text _rankPointText;
     private TMP_Text _winLoseText;
-    private GameObject _flag;
 
 
     private int _rankPoint;
