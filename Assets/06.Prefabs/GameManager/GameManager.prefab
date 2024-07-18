@@ -237,14 +237,14 @@ MonoBehaviour:
       Level: 1
       CurrentExp: 0
       MaxExp: 30
-      OriginSpeed: 3
+      OriginSpeed: 3.5
       OriginDashImpulse: 40
       OriginDashCoolTime: 13
       OriginAtk: 4
       OriginDef: 0
       OriginSkillAtk: 15
       OriginSkillCoolTime: 20
-      Speed: 3
+      Speed: 3.5
       DashImpulse: 40
       DashCoolTime: 13
       Atk: 4
@@ -261,14 +261,14 @@ MonoBehaviour:
       Level: 1
       CurrentExp: 0
       MaxExp: 30
-      OriginSpeed: 4
+      OriginSpeed: 4.5
       OriginDashImpulse: 43
       OriginDashCoolTime: 13
       OriginAtk: 5
       OriginDef: 0.5
       OriginSkillAtk: 17.5
       OriginSkillCoolTime: 18
-      Speed: 4
+      Speed: 4.5
       DashImpulse: 43
       DashCoolTime: 13
       Atk: 5
@@ -285,14 +285,14 @@ MonoBehaviour:
       Level: 1
       CurrentExp: 0
       MaxExp: 30
-      OriginSpeed: 5
+      OriginSpeed: 5.5
       OriginDashImpulse: 46
       OriginDashCoolTime: 11
       OriginAtk: 6
       OriginDef: 1
       OriginSkillAtk: 20
       OriginSkillCoolTime: 16
-      Speed: 5
+      Speed: 5.5
       DashImpulse: 46
       DashCoolTime: 11
       Atk: 6
@@ -646,7 +646,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa96b6bcb54e1fb46b16107dab5afe6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsTestMode: 1
+  IsTestMode: 0
 --- !u!1 &2623835006495115302
 GameObject:
   m_ObjectHideFlags: 0

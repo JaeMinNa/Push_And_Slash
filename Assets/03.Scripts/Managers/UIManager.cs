@@ -8,6 +8,7 @@ using UnityEngine.Audio;
 using TMPro;
 using Photon.Pun;
 using Photon.Realtime;
+using ECM2.Examples.ThirdPerson;
 
 public class UIManager : MonoBehaviour
 {
@@ -31,6 +32,7 @@ public class UIManager : MonoBehaviour
     private GameObject _player;
     private Animator _playerAnimator;
     private PlayerCharacter _playerCharacter;
+    private ThirdPersonController _thirdPersonController;
     private CharacterData _playerData;
     private GameData _gameData;
     private LobbyController _lobbyController;
@@ -60,6 +62,7 @@ public class UIManager : MonoBehaviour
     {
         _player = GameManager.I.PlayerManager.Player;
         _playerCharacter = _player.GetComponent<PlayerCharacter>();
+        _thirdPersonController = _player.GetComponent<ThirdPersonController>();
         _playerAnimator = _player.transform.GetChild(0).GetComponent<Animator>();
         _playerData = GameManager.I.DataManager.PlayerData;
         _gameData = GameManager.I.DataManager.GameData;
